@@ -10,7 +10,7 @@ FSEN v0.9 is the initial release of FSEN.
 1. The forms to add new section and edit section need to be improved:
 	* Auto-save.
 	* Use Bootstrap to implement the UI.
-1. This issue will be fixed in version 1.0.
+1. The issues above will be fixed in version 1.0.
 
 ### New features planned in the next big release (2.0).
 
