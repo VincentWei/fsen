@@ -26,9 +26,9 @@ The features of FSEN are as follow:
 
 ## Goal of FSEN
 
-Initially, we launch FSEN as an open source project, because we want to build a better open source community (the site www.fullstackengineer.net) to host another open source project - Open Cloud API.
+Initially, we launch FSEN as an open source project, because we want to build a better open source community (the site www.fullstackengineer.net) to host another open source projects - Open Cloud API.
 
-However, we hope FSEN can be used for any purpose which is suitable. We will continue developing FSEN as an open source project.
+However, we hope FSEN can be used for any purpose which is suitable. We will continue developing FSEN as an open source project. Of course, the www.FullStackEngineer.Net site also welcome to host other open source projects!
 
 ## About the initiator
 
