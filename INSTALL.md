@@ -8,9 +8,11 @@
 1.	Create database triggers in your database instance. Because some limitations of non-super-user to drop/create triggers on a MySQL instance, we do not include the triggers creation in the installation script. You need to install the triggers mannly. The source code to create the triggers included in the `db.sql` file in the top directory of the source tree of FSEN.
 1.	Define the following constants in your `config/site.php` file:
 
-	`define('SYSTEM_PROJECT_SHORTNAME', 'sys');
+
+	define('SYSTEM_PROJECT_SHORTNAME', 'sys');
 	define('EMAIL_DEFAULT_FROM_ADDRESS', '');		# the email address used to send notification emails to users.
-	define('EMAIL_DEFAULT_FROM_NAME', 'FSEN Daemon');`
+	define('EMAIL_DEFAULT_FROM_NAME', 'FSEN Daemon');
+
 
 1.	Run install.php in tools/ directory in your browser to intall FSEN blocks, themes, singl pages, and other things:
 
