@@ -1,0 +1,507 @@
+<!--
+/**
+ * This file is a part of FullStackEngineer.Net Project.
+ *
+ * FullStackEngineer.Net is a web site for hosting webpages
+ * (especially the documents, forums) of open source projects.
+ *
+ * FullStackEngineer project itself is an open source project.
+ *
+ * For more information, please refer to:
+ *
+ *		http://www.fullstackengineer.net/
+ *
+ * Copyright (C) 2015 WEI Yongming
+ * <http://www.fullstackengineer.net/zh/engineer/weiyongming>
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+-->
+<?xml version="1.0"?>
+<schema version="0.3">
+	<table name="btFseProjects">
+		<field name="bID" type="I">
+			<key />
+			<unsigned />
+		</field>
+		<field name="strTitle" type="C2" size="32">
+		</field>
+	</table>
+
+	<table name="fsen_projects">
+		<field name="project_id" type="C" size="64">
+			<key />
+			<notnull />
+		</field>
+		<field name="fse_id" type="C" size="32">
+			<notnull />
+		</field>
+		<field name="name" type="C2" size="32">
+			<notnull />
+		</field>
+		<field name="short_desc" type="C2" size="255">
+			<notnull />
+		</field>
+		<field name="icon_file_id" type="I">
+			<unsigned />
+			<notnull />
+			<default value="0" />
+		</field>
+		<field name="page_theme" type="C" size="16">
+			<notnull />
+			<default value="default" />
+		</field>
+		<field name="repo_location" type="C" size="16">
+			<notnull />
+			<default value="github" />
+		</field>
+		<field name="repo_name" type="C" size="255">
+			<notnull />
+		</field>
+		<field name="code_lang" type="C" size="16">
+			<notnull />
+		</field>
+		<field name="doc_lang" type="C" size="4">
+			<notnull />
+		</field>
+		<field name="platform" type="C" size="16">
+			<notnull />
+		</field>
+		<field name="license" type="C" size="16">
+			<notnull />
+		</field>
+		<field name="create_time" type="T">
+			<notnull />
+		</field>
+		<field name="heat_level" type="I8">
+			<unsigned />
+			<notnull />
+			<default value="0" />
+		</field>
+
+		<index name="idx_fse_id">
+			<col>fse_id</col>
+		</index>
+		<index name="idx_heat_level">
+			<col>heat_level</col>
+		</index>
+	</table>
+
+	<table name="fsen_project_members">
+		<field name="project_id" type="C" size="64">
+			<notnull />
+		</field>
+		<field name="fse_id" type="C" size="32">
+			<notnull />
+		</field>
+		<field name="display_name" type="C2" size="64">
+			<notnull />
+		</field>
+		<field name="description" type="C2" size="255">
+			<notnull />
+		</field>
+		<field name="member_roles" type="C" size="255">
+			<notnull />
+		</field>
+		<field name="member_rights" type="C" size="16">
+			<notnull />
+			<default value="0123456789abcdef" />
+		</field>
+		<field name="create_time" type="T">
+			<notnull />
+		</field>
+		<field name="update_time" type="T">
+			<deftimestamp />
+			<notnull />
+		</field>
+
+		<index name="idx_project_fse">
+			<col>project_id</col>
+			<col>fse_id</col>
+			<unique />
+		</index>
+		<index name="idx_fse">
+			<col>fse_id</col>
+		</index>
+		<index name="idx_create_time">
+			<col>create_time</col>
+		</index>
+	</table>
+
+	<table name="fsen_project_doc_domains">
+		<field name="project_id" type="C" size="64">
+			<notnull />
+		</field>
+		<field name="domain_handle" type="C" size="16">
+			<notnull />
+		</field>
+		<field name="domain_name" type="C2" size="64">
+			<notnull />
+		</field>
+		<field name="domain_desc" type="C2" size="255">
+		</field>
+		<field name="domain_long_desc" type="C2" size="255">
+		</field>
+		<field name="display_order" type="I8">
+			<notnull />
+			<default value="0" />
+		</field>
+
+		<index name="idx_unique_key">
+			<col>project_id</col>
+			<col>domain_handle</col>
+			<unique />
+		</index>
+		<index name="idx_project">
+			<col>project_id</col>
+		</index>
+	</table>
+
+	<table name="fsen_project_doc_volumes">
+		<field name="project_id" type="C" size="64">
+			<notnull />
+		</field>
+		<field name="domain_handle" type="C" size="16">
+			<notnull />
+		</field>
+		<field name="volume_handle" type="C" size="16">
+			<notnull />
+		</field>
+		<field name="volume_name" type="C2" size="64">
+			<notnull />
+		</field>
+		<field name="volume_desc" type="C2" size="255">
+		</field>
+		<field name="required" type="L">
+			<notnull />
+			<default value="0" />
+		</field>
+		<field name="display_order" type="I8">
+			<notnull />
+			<default value="0" />
+		</field>
+
+		<index name="idx_unique_key">
+			<col>project_id</col>
+			<col>domain_handle</col>
+			<col>volume_handle</col>
+			<unique />
+		</index>
+		<index name="idx_project_domain">
+			<col>project_id</col>
+			<col>domain_handle</col>
+		</index>
+	</table>
+
+	<table name="fsen_project_doc_volume_parts">
+		<field name="project_id" type="C" size="64">
+			<notnull />
+		</field>
+		<field name="domain_handle" type="C" size="16">
+			<notnull />
+		</field>
+		<field name="volume_handle" type="C" size="16">
+			<notnull />
+		</field>
+		<field name="part_handle" type="C" size="16">
+			<notnull />
+		</field>
+		<field name="part_name" type="C2" size="64">
+			<notnull />
+		</field>
+		<field name="part_desc" type="C2" size="255">
+		</field>
+		<field name="required" type="L">
+			<notnull />
+			<default value="0" />
+		</field>
+		<field name="display_order" type="I8">
+			<notnull />
+			<default value="0" />
+		</field>
+		<field name="nr_chapters" type="I">
+			<unsigned />
+			<notnull />
+			<default value="0" />
+		</field>
+
+		<index name="idx_unique_key">
+			<col>project_id</col>
+			<col>domain_handle</col>
+			<col>volume_handle</col>
+			<col>part_handle</col>
+			<unique />
+		</index>
+		<index name="idx_project_domain_volume">
+			<col>project_id</col>
+			<col>domain_handle</col>
+			<col>volume_handle</col>
+		</index>
+	</table>
+
+	<table name="fsen_project_doc_volume_part_chapters_">
+		<field name="project_id" type="C" size="64">
+			<notnull />
+		</field>
+		<field name="domain_handle" type="C" size="16">
+			<notnull />
+		</field>
+		<field name="volume_handle" type="C" size="16">
+			<notnull />
+		</field>
+		<field name="part_handle" type="C" size="16">
+			<notnull />
+		</field>
+		<field name="chapter_handle" type="C" size="128">
+			<notnull />
+		</field>
+		<field name="chapter_name" type="C2" size="64">
+			<notnull />
+		</field>
+		<field name="chapter_desc" type="C2" size="255">
+		</field>
+		<field name="required" type="L">
+			<notnull />
+			<default value="0" />
+		</field>
+		<field name="display_order" type="I8">
+			<notnull />
+			<default value="0" />
+		</field>
+		<field name="create_time" type="T">
+			<notnull />
+		</field>
+		<field name="update_time" type="T">
+			<notnull />
+			<deftimestamp />
+		</field>
+		<field name="nr_sections" type="I">
+			<unsigned />
+			<notnull />
+			<default value="0" />
+		</field>
+		<field name="nr_comments" type="I">
+			<unsigned />
+			<notnull />
+			<default value="0" />
+		</field>
+		<field name="nr_shares" type="I">
+			<unsigned />
+			<notnull />
+			<default value="0" />
+		</field>
+		<field name="nr_praise" type="I">
+			<unsigned />
+			<notnull />
+			<default value="0" />
+		</field>
+		<field name="nr_favorites" type="I">
+			<unsigned />
+			<notnull />
+			<default value="0" />
+		</field>
+		<field name="fse_id" type="C" size="32">
+			<notnull />
+			<default value="" />
+		</field>
+		<field name="heat_level" type="I8">
+			<unsigned />
+			<notnull />
+			<default value="0" />
+		</field>
+
+		<index name="idx_unique_key">
+			<col>project_id</col>
+			<col>domain_handle</col>
+			<col>volume_handle</col>
+			<col>part_handle</col>
+			<col>chapter_handle</col>
+			<unique />
+		</index>
+		<index name="idx_project_domain_volume_part">
+			<col>project_id</col>
+			<col>domain_handle</col>
+			<col>volume_handle</col>
+			<col>part_handle</col>
+		</index>
+		<index name="idx_chapter">
+			<col>chapter_handle</col>
+		</index>
+		<index name="idx_fse_id">
+			<col>fse_id</col>
+		</index>
+		<index name="idx_domain_fse_id">
+			<col>domain_handle</col>
+			<col>fse_id</col>
+		</index>
+		<index name="idx_update_time">
+			<col>update_time</col>
+		</index>
+		<index name="idx_heat_level">
+			<col>heat_level</col>
+		</index>
+	</table>
+
+	<table name="fsen_chapter_tags_">
+		<field name="chapter_handle" type="C" size="128">
+			<notnull />
+		</field>
+		<field name="tag" type="C2" size="32">
+			<notnull />
+		</field>
+
+		<index name="idx_unique_key">
+			<col>chapter_handle</col>
+			<col>tag</col>
+			<unique />
+		</index>
+		<index name="idx_tag">
+			<col>tag</col>
+		</index>
+	</table>
+
+	<table name="fsen_chapter_categories">
+		<field name="chapter_handle" type="C" size="128">
+			<notnull />
+		</field>
+		<field name="category" type="C2" size="32">
+			<notnull />
+		</field>
+
+		<index name="idx_unique_key">
+			<col>chapter_handle</col>
+			<unique />
+		</index>
+		<index name="idx_category">
+			<col>category</col>
+		</index>
+	</table>
+
+	<sql>
+		<desc>Create chapter tables for English and Chinese</desc>
+		<query>
+CREATE TABLE IF NOT EXISTS fsen_project_doc_volume_part_chapters_en LIKE fsen_project_doc_volume_part_chapters_
+		</query>
+		<query>
+CREATE TABLE IF NOT EXISTS fsen_project_doc_volume_part_chapters_zh LIKE fsen_project_doc_volume_part_chapters_
+		</query>
+		<query>
+CREATE OR REPLACE VIEW fsen_project_doc_volume_part_chapters_all AS
+	SELECT * FROM fsen_project_doc_volume_part_chapters_en UNION ALL
+	SELECT * FROM fsen_project_doc_volume_part_chapters_zh
+		</query>
+	</sql>
+
+	<sql>
+		<desc>Create English system project and initial entries for Area, Help, Blog, and Misc modules</desc>
+		<query>
+INSERT IGNORE fsen_projects
+	VALUES ('sys-en', '', 'SYSTEM', 'The system project is not a real project.',
+		0, 'default', 'na', 'na', 'php', 'en', 'LAMP', 'na', NOW(), 0)
+		</query>
+		<query>
+INSERT IGNORE fsen_project_doc_domains
+	(project_id, domain_handle, domain_name, domain_desc, domain_long_desc, display_order)
+VALUES
+	('sys-en', 'home', 'Home', 'English Home', '', 0),
+	('sys-en', 'document', 'Documentation', 'Help Documentation and Blogs', '', 1),
+	('sys-en', 'community', 'Arena', 'Code Arena', 'Show your programming skills', 2),
+	('sys-en', 'misc', 'About', 'Copyright, Authors and Credits', '', 3)
+		</query>
+		<query>
+INSERT IGNORE fsen_project_doc_volumes
+	(project_id, domain_handle, volume_handle, volume_name, volume_desc, required, display_order)
+VALUES
+	('sys-en', 'document', 'help', 'Help', 'How to use this site', 1, 0),
+	('sys-en', 'document', 'blog', 'Engineer Blogs', 'Sharing knowledge to promote technological progress', 1, 1),
+	('sys-en', 'community', 'os', 'Operating Systems', 'Linux, Windows, ...', 1, 0),
+	('sys-en', 'community', 'language', 'Programming Languages', 'C/C++, Java, PHP, JavaScript, ...', 1, 1),
+	('sys-en', 'misc', 'vision', 'Vision', 'Motivation, Goal, and Vision', 1, 0),
+	('sys-en', 'misc', 'faqs', 'FAQs', 'Frequently Asked Questions', 1, 1),
+	('sys-en', 'misc', 'legal', 'Legal', 'License and Legal', 1, 2),
+	('sys-en', 'misc', 'contact', 'Contact Us', 'Contact Information of Us', 1, 4),
+	('sys-en', 'misc', 'sponsors', 'Sponsors', 'Sponsor List of this Site', 1, 5)
+		</query>
+		<query>
+INSERT IGNORE fsen_project_doc_volume_parts
+	(project_id, domain_handle, volume_handle, part_handle, part_name, part_desc, required, display_order)
+VALUES
+	('sys-en', 'document', 'help', 'getting-started', 'Getting Started', 'Sign up and get started', 1, 0),
+	('sys-en', 'document', 'help', 'user-accounts', 'User Accounts', 'Setup your user account', 1, 1),
+	('sys-en', 'document', 'help', 'managing-projects', 'Managing Projects', 'Create and manage your projects', 1, 2),
+	('sys-en', 'document', 'help', 'editing-pages', 'Editing Pages', 'Edit pages of your projects', 1, 3),
+	('sys-en', 'document', 'help', 'managing-forums', 'Managing Forums', 'Manage your forums', 1, 4),
+	('sys-en', 'document', 'help', 'site-policy', 'Site Policy', 'Rules and policy of this site.', 1, 5),
+	('sys-en', 'community', 'os', 'linux', 'Linux', 'Bash, Makefile, ...', 1, 0),
+	('sys-en', 'community', 'language', 'c', 'C/C++', 'C/C++', 1, 0)
+		</query>
+	</sql>
+
+	<sql>
+		<desc>Create Chinese system project and initial entries for Area, Help, Blog, and Misc modules</desc>
+		<query>
+INSERT IGNORE fsen_projects
+	VALUES ('sys-zh', '', '系统', '系统项目并不是真正的项目。',
+		0, 'default', 'na', 'na', 'php', 'zh', 'LAMP', 'na', NOW(), 0)
+		</query>
+		<query>
+INSERT IGNORE fsen_project_doc_domains
+	(project_id, domain_handle, domain_name, domain_desc, domain_long_desc, display_order)
+VALUES
+	('sys-zh', 'home', '首页', '中文首页', '', 0),
+	('sys-zh', 'document', '文档', '帮助文档及博客', '', 1),
+	('sys-zh', 'community', '代码擂台', '没有最好，只有更好！', '展示你的编程技能！', 2),
+	('sys-zh', 'misc', '关于', '版权、作者及荣誉榜', '', 3)
+		</query>
+		<query>
+INSERT IGNORE fsen_project_doc_volumes
+	(project_id, domain_handle, volume_handle, volume_name, volume_desc, required, display_order)
+VALUES
+	('sys-zh', 'document', 'help', '帮助', '大部分使用中遇到的问题已在帮助文档中详尽描述', 1, 0),
+	('sys-zh', 'document', 'blog', '工程师博客', '知识分享促进技术进步', 1, 1),
+	('sys-zh', 'community', 'os', '操作系统', 'Linux, Windows, ...', 1, 0),
+	('sys-zh', 'community', 'language', '编程语言', 'C/C++, Java, PHP, JavaScript, ...', 1, 1),
+	('sys-zh', 'misc', 'vision', '愿景', '动机、目标及愿景', 1, 0),
+	('sys-zh', 'misc', 'faqs', '常见问题', '常见问题及解答', 1, 1),
+	('sys-zh', 'misc', 'legal', '法律信息', '许可证及法律信息', 1, 3),
+	('sys-zh', 'misc', 'contact', '联系我们', '我们的联系方式', 1, 4),
+	('sys-zh', 'misc', 'sponsors', '赞助商', '本站赞助商清单', 1, 5)
+		</query>
+		<query>
+INSERT IGNORE fsen_project_doc_volume_parts
+	(project_id, domain_handle, volume_handle, part_handle, part_name, part_desc, required, display_order)
+VALUES
+	('sys-zh', 'document', 'help', 'getting-started', '开始使用', '注册并开始使用', 1, 0),
+	('sys-zh', 'document', 'help', 'user-accounts', '用户账号', '设置你的用户账号', 1, 1),
+	('sys-zh', 'document', 'help', 'managing-projects', '管理项目', '创建并管理你的项目', 1, 2),
+	('sys-zh', 'document', 'help', 'editing-pages', '编辑页面', '编辑项目文档', 1, 3),
+	('sys-zh', 'document', 'help', 'managing-forums', '管理社区', '管理你的项目社区', 1, 4),
+	('sys-zh', 'document', 'help', 'site-policy', '站点政策', '本网站管理规定及政策', 1, 5),
+	('sys-zh', 'community', 'os', 'linux', 'Linux', 'Bash, Makefile, 工具, ...', 1, 0),
+	('sys-zh', 'community', 'language', 'c', 'C/C++', 'C/C++', 1, 0)
+		</query>
+
+		<query>
+CREATE TABLE IF NOT EXISTS fsen_chapter_tags_en LIKE fsen_chapter_tags_
+		</query>
+		<query>
+CREATE TABLE IF NOT EXISTS fsen_chapter_tags_zh LIKE fsen_chapter_tags_
+		</query>
+		<query>
+CREATE OR REPLACE VIEW fsen_chapter_tags_all AS
+	SELECT * FROM fsen_chapter_tags_en UNION ALL
+	SELECT * FROM fsen_chapter_tags_zh
+		</query>
+	</sql>
+</schema>
+

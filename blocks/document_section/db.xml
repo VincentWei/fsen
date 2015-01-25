@@ -1,0 +1,344 @@
+<!--
+/**
+ * This file is a part of FullStackEngineer.Net Project.
+ *
+ * FullStackEngineer.Net is a web site for hosting webpages
+ * (especially the documents, forums) of open source projects.
+ *
+ * FullStackEngineer project itself is an open source project.
+ *
+ * For more information, please refer to:
+ *
+ *		http://www.fullstackengineer.net/
+ *
+ * Copyright (C) 2015 WEI Yongming
+ * <http://www.fullstackengineer.net/zh/engineer/weiyongming>
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+ -->
+<?xml version="1.0"?>
+<schema version="0.3">
+	<table name="btDocumentSection">
+		<field name="bID" type="I">
+			<key />
+			<unsigned />
+		</field>
+		<field name="domainHandle" type="C" size="16">
+			<notnull />
+		</field>
+		<field name="sectionID" type="C" size="32">
+			<notnull />
+		</field>
+		<field name="currentVerCode" type="I">
+			<unsigned />
+			<notnull />
+			<default value="0" />
+		</field>
+	</table>
+
+	<table name="fsen_document_sections_">
+		<field name="id" type="C" size="32">
+			<desc>The identity is the content file name</desc>
+			<key />
+			<notnull />
+		</field>
+		<field name="author_id" type="C" size="32">
+			<notnull />
+		</field>
+		<field name="page_id" type="I">
+			<unsigned />
+			<notnull />
+		</field>
+		<field name="area_handle" type="C" size="32">
+			<notnull />
+		</field>
+		<field name="block_id" type="I">
+			<unsigned />
+			<notnull />
+			<default value="0" />
+		</field>
+		<field name="project_id" type="C" size="64">
+			<notnull />
+		</field>
+		<field name="domain_handle" type="C" size="16">
+			<notnull />
+			<default value="na" />
+		</field>
+		<field name="volume_handle" type="C" size="16">
+			<notnull />
+			<default value="na" />
+		</field>
+		<field name="part_handle" type="C" size="16">
+			<notnull />
+			<default value="na" />
+		</field>
+		<field name="chapter_handle" type="C" size="128">
+			<notnull />
+			<default value="na" />
+		</field>
+		<field name="max_ver_code" type="I">
+			<unsigned />
+			<notnull />
+			<default value="0" />
+		</field>
+		<field name="curr_ver_code" type="I">
+			<unsigned />
+			<notnull />
+			<default value="0" />
+		</field>
+		<field name="nr_shares" type="I">
+			<unsigned />
+			<notnull />
+			<default value="0" />
+		</field>
+		<field name="nr_comments" type="I">
+			<unsigned />
+			<notnull />
+			<default value="0" />
+		</field>
+		<field name="nr_praise" type="I">
+			<unsigned />
+			<notnull />
+			<default value="0" />
+		</field>
+		<field name="nr_favorites" type="I">
+			<unsigned />
+			<notnull />
+			<default value="0" />
+		</field>
+		<field name="nr_dislike" type="I">
+			<unsigned />
+			<notnull />
+			<default value="0" />
+		</field>
+		<field name="nr_passby" type="I">
+			<unsigned />
+			<notnull />
+			<default value="0" />
+		</field>
+		<field name="status" type="I">
+			<unsigned />
+			<notnull />
+			<default value="0" />
+		</field>
+		<field name="display_order" type="I">
+			<unsigned />
+			<notnull />
+			<default value="0" />
+		</field>
+		<field name="heat_level" type="I8">
+			<unsigned />
+			<notnull />
+			<default value="0" />
+		</field>
+		<field name="create_time" type="T">
+			<notnull />
+		</field>
+		<field name="update_time" type="T">
+			<notnull />
+			<deftimestamp />
+		</field>
+
+		<index name="idx_project_domain_volume_part_chapter">
+			<col>project_id</col>
+			<col>domain_handle</col>
+			<col>volume_handle</col>
+			<col>part_handle</col>
+			<col>chapter_handle</col>
+		</index>
+		<index name="idx_page_area">
+			<col>page_id</col>
+			<col>area_handle</col>
+		</index>
+		<index name="idx_author_id">
+			<col>author_id</col>
+		</index>
+		<index name="idx_heat_level">
+			<col>heat_level</col>
+		</index>
+		<index name="idx_create_time">
+			<col>create_time</col>
+		</index>
+		<index name="idx_update_time">
+			<col>update_time</col>
+		</index>
+	</table>
+
+	<table name="fsen_document_sections_deleted">
+		<field name="id" type="C" size="32">
+			<desc>The identity is the content file name</desc>
+			<key />
+			<notnull />
+		</field>
+		<field name="author_id" type="C" size="32">
+			<notnull />
+		</field>
+		<field name="project_id" type="C" size="64">
+			<notnull />
+		</field>
+		<field name="domain_handle" type="C" size="16">
+			<notnull />
+			<default value="na" />
+		</field>
+		<field name="volume_handle" type="C" size="16">
+			<notnull />
+			<default value="na" />
+		</field>
+		<field name="part_handle" type="C" size="16">
+			<notnull />
+			<default value="na" />
+		</field>
+		<field name="chapter_handle" type="C" size="128">
+			<notnull />
+			<default value="na" />
+		</field>
+		<field name="max_ver_code" type="I">
+			<unsigned />
+			<notnull />
+			<default value="0" />
+		</field>
+		<field name="delete_time" type="T">
+			<notnull />
+		</field>
+
+		<index name="idx_author_id">
+			<col>author_id</col>
+		</index>
+		<index name="idx_delete_time">
+			<col>delete_time</col>
+		</index>
+	</table>
+
+	<table name="fsen_document_section_comments">
+		<field name="id" type="I8">
+			<key />
+			<unsigned />
+			<autoincrement />
+		</field>
+		<field name="section_id" type="C" size="32">
+			<notnull />
+		</field>
+		<field name="reply_to" type="I8">
+			<unsigned />
+		</field>
+		<field name="replied_author_id" type="C" size='32'>
+		</field>
+		<field name="author_id" type="C" size='32'>
+			<notnull />
+		</field>
+		<field name="action" type="I1">
+			<unsigned />
+			<notnull />
+		</field>
+		<field name="body" type="C2" size='140'>
+		</field>
+		<field name="create_time" type="T">
+			<notnull />
+		</field>
+
+		<index name="idx_section_id">
+			<col>section_id</col>
+		</index>
+		<index name="idx_create_time">
+			<col>create_time</col>
+		</index>
+	</table>
+
+	<table name="fsen_document_section_action_comments">
+		<opt platform="MySQL">AUTO_INCREMENT=4611686018427387904</opt>
+		<field name="id" type="I8">
+			<key />
+			<unsigned />
+			<autoincrement />
+		</field>
+		<field name="section_id" type="C" size="32">
+			<notnull />
+		</field>
+		<field name="author_id" type="C" size='32'>
+			<notnull />
+		</field>
+		<field name="action" type="I1">
+			<unsigned />
+			<notnull />
+		</field>
+		<field name="create_time" type="T">
+			<notnull />
+		</field>
+
+		<index name="idx_unique">
+			<col>section_id</col>
+			<col>author_id</col>
+			<col>action</col>
+			<unique />
+		</index>
+		<index name="idx_section_author">
+			<col>section_id</col>
+			<col>author_id</col>
+		</index>
+		<index name="idx_author_action">
+			<col>author_id</col>
+			<col>action</col>
+		</index>
+		<index name="idx_create_time">
+			<col>create_time</col>
+		</index>
+	</table>
+
+	<sql>
+		<desc>Create tables for English and Chinese languages</desc>
+		<query>CREATE TABLE IF NOT EXISTS fsen_document_sections_en LIKE fsen_document_sections_</query>
+		<query>CREATE TABLE IF NOT EXISTS fsen_document_sections_zh LIKE fsen_document_sections_</query>
+		<query>
+			CREATE OR REPLACE VIEW fsen_document_sections_all AS
+			SELECT * FROM fsen_document_sections_en UNION ALL
+			SELECT * FROM fsen_document_sections_zh
+		</query>
+		<query>
+CREATE OR REPLACE VIEW fsen_stat_chapter_activities_zh AS
+	SELECT project_id, domain_handle, volume_handle, part_handle, chapter_handle,
+			COUNT(*) AS total_sections,
+			SUM(nr_comments) AS total_comments, SUM(nr_praise) AS total_praise,
+			SUM(nr_shares) AS total_shares, SUM(nr_favorites) AS total_favorites
+		FROM fsen_document_sections_zh
+		GROUP BY project_id, domain_handle, volume_handle, part_handle, chapter_handle
+		</query>
+		<query>
+CREATE OR REPLACE VIEW fsen_stat_chapter_activities_en AS
+	SELECT project_id, domain_handle, volume_handle, part_handle, chapter_handle,
+			COUNT(*) AS total_sections,
+			SUM(nr_comments) AS total_comments, SUM(nr_praise) AS total_praise,
+			SUM(nr_shares) AS total_shares, SUM(nr_favorites) AS total_favorites
+		FROM fsen_document_sections_zh
+		GROUP BY project_id, domain_handle, volume_handle, part_handle, chapter_handle
+		</query>
+		<query>
+CREATE OR REPLACE VIEW fsen_stat_project_activities_zh AS
+	SELECT project_id,
+			SUM(total_sections) AS overall_sections,
+			SUM(total_comments) AS overall_comments, SUM(total_praise) AS overall_praise,
+			SUM(total_shares) AS overall_shares, SUM(total_favorites) AS overall_favorites
+		FROM fsen_stat_chapter_activities_zh GROUP BY project_id
+		</query>
+		<query>
+CREATE OR REPLACE VIEW fsen_stat_project_activities_en AS
+	SELECT project_id,
+			SUM(total_sections) AS overall_sections,
+			SUM(total_comments) AS overall_comments, SUM(total_praise) AS overall_praise,
+			SUM(total_shares) AS overall_shares, SUM(total_favorites) AS overall_favorites
+		FROM fsen_stat_chapter_activities_en
+		GROUP BY project_id
+		</query>
+	</sql>
+</schema>
+

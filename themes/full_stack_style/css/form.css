@@ -1,0 +1,186 @@
+/**
+ * This file is a part of FullStackEngineer.Net Project.
+ *
+ * FullStackEngineer.Net is a web site for hosting webpages
+ * (especially the documents, forums) of open source projects.
+ *
+ * FullStackEngineer project itself is an open source project.
+ *
+ * For more information, please refer to:
+ *
+ *		http://www.fullstackengineer.net/
+ *
+ * Copyright (C) 2015 WEI Yongming
+ * <http://www.fullstackengineer.net/zh/engineer/weiyongming>
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+.full-stack .form-basic {
+	padding:15px;
+	background-color:#fff;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px; 
+
+	-moz-column-count:2;
+	-moz-column-gap:10px;
+	-moz-column-rule:1px solid #ddccb5;
+	-webkit-column-count:2;
+	-webkit-column-gap:10px;
+	-webkit-column-rule:1px solid #ddccb5;
+
+	column-count:2;
+	column-gap:10px;
+	column-rule:1px solid #ddccb5;
+}
+
+.full-stack .form-basic fieldset.left-column {
+	-moz-column-break-inside:avoid-column;
+	-webkit-column-break-inside:avoid-column;
+	column-break-inside:avoid-column;
+	margin-left:5px;
+	margin-bottom:15px;
+	height:1400px;
+}
+
+.full-stack .form-basic fieldset.right-column {
+	-moz-column-break-inside:avoid-column;
+	-webkit-column-break-inside:avoid-column;
+	column-break-inside:avoid-column;
+	margin-left:5px;
+	height:1400px;
+}
+
+.full-stack .form ul {
+	margin:0 5px 0 5px;
+}
+
+.full-stack .form li {
+	margin:0 0 9px 0;
+}
+
+.full-stack .form input {
+	display:block;
+}
+
+.full-stack .form select {
+	display:block;
+}
+
+.full-stack .form textarea {
+	display:block;
+	font-family:"Microsoft Yahei", "Arial";
+}
+
+
+.full-stack fieldset.profile {
+	margin: 5px 10px 5px 10px;
+}
+
+.full-stack fieldset.profile > legend {
+	font-size: 14px;
+}
+
+.full-stack section.rounded {
+	clear:both;
+	position:relative;
+	display:block;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	border: solid 1px #b7c2d6;
+	background-color:rgba(224, 233, 242, 0.5);
+	box-shadow:0px 1px 0px rgba(256,256,256,0.9);
+	margin:10px;
+	min-height:44px;
+	color:rgba(0, 56, 153, 0.8);
+	text-align: left;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+.full-stack section.fieldBase {
+	position:relative;
+	font-size:16px;
+	padding:10px;
+	-webkit-border-radius:6px;
+	-moz-border-radius:6px;
+	border-radius:6px;
+	height:18px;
+}
+
+.full-stack section.note {
+	margin: 20px 20px 5px 20px;
+	text-align:left;
+	font-size:14px;
+	color: rgba(0,0,0,.5);
+	text-shadow: rgba(256,256,256,.7) 0 1px 0px;
+}
+
+.full-stack section.note > a {
+	font-size:14px;
+	color: red;
+}
+
+.full-stack section.description {
+	margin: 0px 20px 20px 20px;
+	text-align:center;
+	font-size:12px;
+	color: rgba(0,0,0,.5);
+	text-shadow: rgba(256,256,256,.7) 0 1px 0px;
+}
+
+.full-stack section.description > a {
+	color: red;
+	font-size:12px;
+}
+
+.full-stack section.description > span {
+	color: red;
+	font-size:14px;
+}
+
+.full-stack section.fieldBase > a {
+	clear:both;
+	display:block;
+	position:relative;
+	font-size:16px;
+	text-align:center;
+	margin: 0 auto;
+	color: rgba(0,0,0,.9);
+	text-shadow: rgba(256,256,256,.7) 0 1px 0px;
+}
+
+.full-stack section.fieldBase > input {
+	float:right;
+	right:10px;
+	padding:3px 3px 3px 3px;
+	font-size:14px;
+	-webkit-border-radius:4px;
+	-moz-border-radius:4px;
+	border-radius:4px;
+}
+
+.full-stack section.fieldBase > select {
+	float:right;
+	right:10px;
+	width:150px;
+	padding:3px 3px 3px 3px;
+	font-size:14px;
+	-webkit-border-radius:4px;
+	-moz-border-radius:4px;
+	border-radius:4px;
+}
+

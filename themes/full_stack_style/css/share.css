@@ -1,0 +1,96 @@
+/**
+ * This file is a part of FullStackEngineer.Net Project.
+ *
+ * FullStackEngineer.Net is a web site for hosting webpages
+ * (especially the documents, forums) of open source projects.
+ *
+ * FullStackEngineer project itself is an open source project.
+ *
+ * For more information, please refer to:
+ *
+ *		http://www.fullstackengineer.net/
+ *
+ * Copyright (C) 2015 WEI Yongming
+ * <http://www.fullstackengineer.net/zh/engineer/weiyongming>
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+.full-stack .share-dialog {
+	position:relative;
+	left:50%;
+	top:100px;
+	width:274px;
+	height:160px;
+	margin-left:-137px;
+	/* border:3px solid #b2b7c2;*/
+	border: 1px solid #fff;
+	-webkit-border-radius:5px;
+	-moz-border-radius:5px;
+	-o-border-radius:5px;
+	-ms-border-radius:5px;
+	border-radius:5px;
+	/*-webkit-box-shadow:0 2px 8px #000;*/
+	box-shadow: 0 2px 30px #000,0 0 2px;
+	/* background:rgba(99,109,103,.8);*/
+	background: #eee;
+}
+
+.full-stack .share-dialog h1 {
+	padding:10px 10px 10px 10px;
+	/* color: #fff;*/
+	color: #555;
+	font-size:18px;
+	font-weight:bold;
+	text-align:center;
+	/* text-shadow:0 -2px 0 rgba(0,0,0,.2);*/
+	text-shadow: 0 1px 0 rgba(256,256,256,.35);
+	background: -webkit-linear-gradient(#ddd 0, #ccc 40%);
+	border-bottom: 1px solid #aaa;
+	box-shadow: 0 1px 0 #fff;
+}
+
+.full-stack .share-dialog p {
+	padding:12px 10px 0px 10px;
+	color: #fff;
+	font-size:12px;
+	text-align:center;
+}
+
+.full-stack .share-dialog .action {
+	text-align:center;
+}
+
+.full-stack .share-dialog .action div {
+	display: inline-block;
+	width:120px;
+	height:41px;
+	margin:5px 5px;
+	color:#444;
+	font-size:16px;
+	line-height:41px;
+	text-align:center;
+	/* text-shadow:0 -2px 0 rgba(0,0,0,.2);*/
+}
+
+.full-stack .share-dialog .action .ui-btn-cancel {
+	/* background:url(/themes/maishi/img/ui-cancel.png) no-repeat 0 0;*/
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	background-image: -webkit-linear-gradient(#f7f7f7, #eee 30%, #ccc);
+}
+
+.full-stack .share-dialog .action .ui-btn-submit {
+	background:url(/themes/maishi/img/ui-submit.png) no-repeat 0 0;
+}
+

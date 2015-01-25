@@ -1,0 +1,208 @@
+<!--
+/**
+ * This file is a part of FullStackEngineer.Net Project.
+ *
+ * FullStackEngineer.Net is a web site for hosting webpages
+ * (especially the documents, forums) of open source projects.
+ *
+ * FullStackEngineer project itself is an open source project.
+ *
+ * For more information, please refer to:
+ *
+ *		http://www.fullstackengineer.net/
+ *
+ * Copyright (C) 2015 WEI Yongming
+ * <http://www.fullstackengineer.net/zh/engineer/weiyongming>
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+-->
+<?xml version="1.0"?>
+<schema version="0.3">
+	<table name="btFseRegister">
+		<field name="bID" type="I">
+			<key />
+			<unsigned />
+		</field>
+		<field name="strTitle" type="C2" size="32">
+		</field>
+	</table>
+
+	<table name="fse_basic_profiles">
+		<field name="fse_id" type="C" size="32">
+			<key />
+			<notnull />
+		</field>
+		<field name="user_name" type="C" size="30">
+			<notnull />
+		</field>
+		<field name="hashed_passwd" type="C" size="32">
+			<notnull />
+		</field>
+		<field name="email_box" type="C" size="128">
+			<notnull />
+		</field>
+		<field name="nick_name" type="C2" size="30">
+			<notnull />
+		</field>
+		<field name="avatar_file_id" type="I">
+			<unsigned />
+			<notnull />
+			<default value="0" />
+		</field>
+		<field name="location_country" type="C2" size="255">
+			<notnull />
+		</field>
+		<field name="location_province" type="C2" size="255">
+			<notnull />
+		</field>
+		<field name="location_district" type="C2" size="255">
+			<notnull />
+		</field>
+		<field name="self_desc" type="C" size="255">
+		</field>
+		<field name="public_email" type="C" size="128">
+		</field>
+		<field name="public_url" type="C" size="255">
+		</field>
+		<field name="public_org" type="C2" size="255">
+		</field>
+		<field name="email_verified" type="L">
+			<unsigned />
+			<notnull />
+			<default value="0" />
+		</field>
+		<field name="email_keep_private" type="L">
+			<unsigned />
+			<notnull />
+			<default value="0" />
+		</field>
+		<field name="create_time" type="T">
+			<notnull />
+		</field>
+		<field name="update_time" type="T">
+			<notnull />
+			<deftimestamp />
+		</field>
+		<field name="last_login_time" type="T">
+			<notnull />
+			<default value="2013-01-01" />
+		</field>
+		<field name="def_locale" type="C" size="6">
+			<notnull />
+			<default value="en_US" />
+		</field>
+		<field name="nr_chapters" type="I">
+			<unsigned />
+			<notnull />
+			<default value="0" />
+		</field>
+		<field name="nr_sections" type="I">
+			<unsigned />
+			<notnull />
+			<default value="0" />
+		</field>
+		<field name="nr_comments" type="I">
+			<unsigned />
+			<notnull />
+			<default value="0" />
+		</field>
+		<field name="nr_comments_got" type="I">
+			<unsigned />
+			<notnull />
+			<default value="0" />
+		</field>
+		<field name="nr_praise_got" type="I">
+			<unsigned />
+			<notnull />
+			<default value="0" />
+		</field>
+		<field name="nr_favorites_got" type="I">
+			<unsigned />
+			<notnull />
+			<default value="0" />
+		</field>
+		<field name="nr_shares_got" type="I">
+			<unsigned />
+			<notnull />
+			<default value="0" />
+		</field>
+		<field name="heat_level" type="I8">
+			<unsigned />
+			<notnull />
+			<default value="0" />
+		</field>
+		<field name="status" type="I">
+			<unsigned />
+			<notnull />
+			<default value="0" />
+		</field>
+
+		<index name="idx_user_name">
+			<unique />
+			<col>user_name</col>
+		</index>
+		<index name="idx_email_box">
+			<unique />
+			<col>email_box</col>
+		</index>
+		<index name="idx_create_time">
+			<col>create_time</col>
+		</index>
+		<index name="idx_last_login_time">
+			<col>last_login_time</col>
+		</index>
+		<index name="idx_heat_level">
+			<col>heat_level</col>
+		</index>
+	</table>
+
+	<table name="fse_email_box_validation_hashes">
+		<field name="email_box" type="C" size="128">
+			<key />
+			<notnull />
+		</field>
+		<field name="hash_value" type="C" size="32">
+			<notnull />
+		</field>
+		<field name="update_time" type="T">
+			<notnull />
+			<deftimestamp />
+		</field>
+
+		<index name="idx_hash_value">
+			<unique />
+			<col>hash_value</col>
+		</index>
+	</table>
+
+	<table name="fse_reset_password_validation_hashes">
+		<field name="email_box" type="C" size="128">
+			<key />
+			<notnull />
+		</field>
+		<field name="hash_value" type="C" size="32">
+			<notnull />
+		</field>
+		<field name="update_time" type="T">
+			<notnull />
+			<deftimestamp />
+		</field>
+
+		<index name="idx_hash_value">
+			<unique />
+			<col>hash_value</col>
+		</index>
+	</table>
+</schema>
+
