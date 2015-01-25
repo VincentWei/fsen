@@ -28,19 +28,14 @@
  */
 defined('C5_EXECUTE') or die('Access Denied.');
 
-exit (0);
+#exit (0);
 
 require_once ('helpers/fsen/ProjectInfo.php');
 
 Loader::model ('fsen_localization');
 FSENLocalization::setupInterfaceLocalization4AjaxRequest ();
 
-/*
-$page = Page::getByPath (ProjectInfo::assemblePath ('none', 'home'));
-echo ($page->getCollectionID() == false)?'not existed':'ok';
-*/
-
-exit (0);
+#exit (0);
 
 Loader::model('single_page');
 Loader::model('job');
