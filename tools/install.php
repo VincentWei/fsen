@@ -37,6 +37,8 @@ FSENLocalization::setupInterfaceLocalization4AjaxRequest ();
 
 #exit (0);
 
+// make directories
+
 Loader::model('single_page');
 Loader::model('job');
 
