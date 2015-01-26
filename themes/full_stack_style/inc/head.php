@@ -55,7 +55,7 @@ $this->addHeaderItem('<script type="text/javascript" charset="utf-8" src="/concr
 $this->addHeaderItem('<script type="text/javascript" charset="utf-8" src="/concrete/js/jquery.form.js"></script>');
 $this->addHeaderItem('<script type="text/javascript" charset="utf-8" src="/concrete/js/jquery.rating.js"></script>');
 $this->addHeaderItem('<script type="text/javascript" charset="utf-8" src="/concrete/js/ccm.app.js"></script>');
-$this->addHeaderItem('<script type="text/javascript" charset="utf-8" src="/js/bootstrap.min.js"></script>');
+$this->addHeaderItem('<script type="text/javascript" charset="utf-8" src="/concrete/js/bootstrap.min.js"></script>');
 
 $this->addHeaderItem('<script type="text/javascript" charset="utf-8" src="/js/sh/shCore.js"></script>');
 $this->addHeaderItem('<script type="text/javascript" charset="utf-8" src="/js/sh/shAutoloader.js"></script>');
