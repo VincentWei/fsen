@@ -256,8 +256,7 @@ class ProjectInfo {
 					"cName" => $domain_name,
 					"cHandle" => $domain_handle,
 					"cDescription" => $domain_desc));
-		if ($domain_home instanceof Page) {
-			$domain_home->setAttribute ('pa_project_id', $project_id);
+		if ($domain_home->getCollectionID() > 0) {
 		}
 		else {
 			return false;
@@ -302,7 +301,6 @@ class ProjectInfo {
 		$volume_page = $domain_page->add ($page_type, array ("cName" => $volume_name,
 				"cHandle" => $volume_handle, "cDescription" => $volume_desc));
 		if ($volume_page->getCollectionID() > 0) {
-			$volume_page->setAttribute ('pa_project_id', $project_id);
 		}
 		else {
 			return false;
@@ -348,7 +346,6 @@ class ProjectInfo {
 		$part_page = $volume_page->add ($page_type, array ("cName" => $part_name,
 				"cHandle" => $part_handle, "cDescription" => $part_desc));
 		if ($part_page->getCollectionID() > 0) {
-			$part_page->setAttribute ('pa_project_id', $project_id);
 		}
 		else {
 			return false;
@@ -411,7 +408,6 @@ class ProjectInfo {
 		$chapter_page = $part_page->add ($page_type, array ("cName" => $chapter_name,
 				"cHandle" => $chapter_handle, "cDescription" => $chapter_desc));
 		if ($chapter_page->getCollectionID() > 0) {
-			$chapter_page->setAttribute ('pa_project_id', $project_id);
 		}
 		else {
 			return false;

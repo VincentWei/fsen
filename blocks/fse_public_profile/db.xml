@@ -1,3 +1,4 @@
+<?xml version="1.0"?>
 <!--
 /**
  * This file is a part of FullStackEngineer.Net Project.
@@ -27,7 +28,6 @@
  * limitations under the License.
  */
 -->
-<?xml version="1.0"?>
 <schema version="0.3">
 	<table name="btFsePublicProfile">
 		<field name="bID" type="I">

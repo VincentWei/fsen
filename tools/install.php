@@ -45,11 +45,22 @@ Loader::model('job');
 $pkg = null;
 
 // install themes
-PageTheme::add ('full_stack_style', $pkg);
-PageTheme::add ('full_stack_style_mobile', $pkg);
+echo '<br/>';
+echo 'Installing themes... <br/>';
+$themes = array ('full_stack_style', 'full_stack_style_mobile');
+foreach ($themes as $t) {
+	$pt = PageTheme::getByHandle ($t);
+	if ($pt instanceof PageTheme) {
+	echo "$t had been installed; skip installing. <br/>";
+	}
+	else {
+		PageTheme::add ($t, $pkg);
+		echo "$t newly installed. <br/>";
+	}
 
-// install jobs
-$jb = Job::installByPackage('stat_user_activities', $pkg);
+	flush();
+	ob_flush();
+}
 
 // install blocks
 $bts = array (
@@ -68,11 +79,19 @@ $bts = array (
 	'project_banner',
 );
 
+echo '<br/>';
 echo 'Installing block types... <br/>';
-foreach ($bts as $bt) {
-	echo '	installing ' . $bt . ': ';
-	BlockType::installBlockTypeFromPackage($bt, $pkg);
-	echo 'done' . '<br/>';
+foreach ($bts as $b) {
+	$bt = BlockType::getByHandle ($b);
+	if ($bt instanceof BlockType) {
+		echo "$b had been installed; skip installing. <br/>";
+	}
+	else {
+		#BlockType::installBlockTypeFromPackage($b, $pkg);
+		BlockType::installBlockType ($b);
+		echo "$b newly installed. <br/>";
+	}
+
 	flush();
 	ob_flush();
 }
@@ -125,173 +144,44 @@ $short_cache_pths = array (
 	'personal_homepage',
 );
 
+echo '<br/>';
 echo 'Installing page types... <br/>';
 foreach ($page_type_handles as $pth) {
 	echo '	installing ' . $pth['ctHandle'] . ': ';
 	$page_type = CollectionType::getByHandle ($pth['ctHandle']);
-	if (!($page_type instanceof CollectionType)) {
+	if ($page_type instanceof CollectionType) {
+		echo $pth['ctHandle'] . ' had been installed; skip installing. <br/>';
+	}
+	else {
 		$page_type = CollectionType::add ($pth, $pkg);
-		echo 'installed. <br/>';
-	}
-	else {
-		echo 'exisited. <br/>';
-	}
+		echo $pth['ctHandle'] . ' newly installed. <br/>';
 
-	$masterCID = $page_type->getMasterCollectionID();
-	$masterCollection = Page::getByID($masterCID);
-	if (in_array ($pth['ctHandle'], $nocache_pths)) {
-		// disable full page cache for specific page types
-		$masterCollection->update (array ('cCacheFullPageContent' => 0));
-	}
-	else if (in_array ($pth['ctHandle'], $short_cache_pths)) {
-		// set full page cache for specific page types
-		$masterCollection->update (array (
-				'cCacheFullPageContent' => 1,
-				'cCacheFullPageContentOverrideLifetime' => 'custom',
-				'cCacheFullPageContentLifetimeCustom' => 10,
-				));
-	}
-	else {
-		// follow system default for other page types
-		$masterCollection->update (array (
-				'cCacheFullPageContent' => -1,
-				'cCacheFullPageContentOverrideLifetime' => '0',
-				'cCacheFullPageContentLifetimeCustom' => 0,
-				));
+		$masterCID = $page_type->getMasterCollectionID();
+		$masterCollection = Page::getByID($masterCID);
+		if (in_array ($pth['ctHandle'], $nocache_pths)) {
+			// disable full page cache for specific page types
+			$masterCollection->update (array ('cCacheFullPageContent' => 0));
+		}
+		else if (in_array ($pth['ctHandle'], $short_cache_pths)) {
+			// set full page cache for specific page types
+			$masterCollection->update (array (
+					'cCacheFullPageContent' => 1,
+					'cCacheFullPageContentOverrideLifetime' => 'custom',
+					'cCacheFullPageContentLifetimeCustom' => 10,
+					));
+		}
+		else {
+			// follow system default for other page types
+			$masterCollection->update (array (
+					'cCacheFullPageContent' => -1,
+					'cCacheFullPageContentOverrideLifetime' => '0',
+					'cCacheFullPageContentLifetimeCustom' => 0,
+					));
+		}
 	}
 
 	flush();
 	ob_flush();
-}
-
-// Install event extends here
-Events::extend('on_start', 'FSENLocalization', 'setupInterfaceLocalization4Request', 'models/fsen_localization.php');
-Events::extend('on_before_render', 'FSENLocalization', 'setupInterfaceLocalization4Page', 'models/fsen_localization.php');
-
-$home_page = Page::getByID (HOME_CID);
-// disable full page cache for HOME page
-// $home_page->update (array ('cCacheFullPageContent' => 0));
-
-// create <lang>/project, <lang>/engineer pages
-$languages = array (
-	array (
-		'home_handle' => 'en', 'home_name' => 'FSEN', 'home_desc' => 'English HOME',
-		'projects_handle' => 'project', 'projects_name' => 'Projects', 'projects_desc' => 'Projects',
-		'engineers_handle' => 'engineer', 'engineers_name' => 'Engineers', 'engineers_desc' => 'Engineers',
-		),
-	array (
-		'home_handle' => 'zh', 'home_name' => '首页', 'home_desc' => '中文版首页',
-		'projects_handle' => 'project', 'projects_name' => '项目', 'projects_desc' => '项目',
-		'engineers_handle' => 'engineer', 'engineers_name' => '工程师', 'engineers_desc' => '工程师',
-		),
-);
-
-echo 'Creating system pages... <br/>';
-foreach ($languages as $lang) {
-	echo 'Creating localized home page for '; echo $lang['handle']; echo '... ';
-
-	$page_type = CollectionType::getByHandle ('localized_home');
-	if (!($page_type instanceof CollectionType)) {
-		echo 'Error: failed to get page type for localized home page.';
-		exit (0);
-	}
-
-	$localized_home_page = Page::getByPath ('/' . $lang['home_handle']);
-	if ($localized_home_page->getCollectionID() == false) {
-		$localized_home_page = $home_page->add ($page_type, array (
-				"cHandle" => $lang['home_handle'],
-				"cName" => $lang['home_name'],
-				"cDescription" => $lang['home_desc']));
-		if ($localized_home_page->getCollectionID() == false) {
-			echo 'Error: failed to crate localized home page. <br/>';
-			exit (0);
-		}
-	}
-
-	echo 'Done <br/>';
-	flush();
-	ob_flush();
-
-	echo 'Creating localized projects page for '; echo $lang['home_handle']; echo '... ';
-	$page_type = CollectionType::getByHandle ('localized_projects');
-	if (!($page_type instanceof CollectionType)) {
-		echo 'Error: failed to get page type for localized projects page.';
-		exit (0);
-	}
-
-	$localized_projects_page = Page::getByPath ('/' . $lang['home_handle'] . '/project');
-	if ($localized_projects_page->getCollectionID() == false) {
-		$localized_projects_page = $localized_home_page->add ($page_type, array (
-				"cHandle" => $lang['projects_handle'],
-				"cName" => $lang['projects_name'],
-				"cDescription" => $lang['projects_desc']));
-		if ($localized_projects_page->getCollectionID() == false) {
-			echo 'Error: failed to crate localized projects page. <br/>';
-			exit (0);
-		}
-	}
-
-	echo 'Creating localized engineers page for '; echo $lang['home_handle']; echo '... ';
-	$page_type = CollectionType::getByHandle ('localized_engineers');
-	if (!($page_type instanceof CollectionType)) {
-		echo 'Error: failed to get page type for localized engineers page.';
-		exit (0);
-	}
-
-	$localized_engineers_page = Page::getByPath ('/' . $lang['home_handle'] . '/engineer');
-	if ($localized_engineers_page->getCollectionID() == false) {
-		$localized_engineers_page = $localized_home_page->add ($page_type, array (
-				"cHandle" => $lang['engineers_handle'],
-				"cName" => $lang['engineers_name'],
-				"cDescription" => $lang['engineers_desc']));
-		if ($localized_engineers_page->getCollectionID() == false) {
-			echo 'Error: failed to crate localized engineers page. <br/>';
-			exit (0);
-		}
-	}
-
-	echo 'Done <br/>';
-	flush();
-	ob_flush();
-
-	// create system pages
-	$doc_lang = $lang['home_handle'];
-	$project_id = 'sys-' . $doc_lang;
-
-	echo "Creating document and community pages for $doc_lang ... <br />";
-
-	$db = Loader::db ();
-	$domains = $db->getAll ("SELECT * FROM fsen_project_doc_domains
-	WHERE project_id=? AND domain_handle != 'home'", array ($project_id));
-
-	foreach ($domains as $d) {
-		$domain_page = ProjectInfo::addDomainPage ($project_id, $localized_projects_page,
-				$d['domain_handle'], $d['domain_name'], $d['domain_desc']);
-		echo '	Added domain page for '; echo $d['domain_handle']; echo '<br/>';
-		flush();
-		ob_flush();
-
-		$volumes = $db->getAll ("SELECT * FROM fsen_project_doc_volumes
-	WHERE project_id=? AND domain_handle=? ORDER BY display_order", array ($project_id, $d['domain_handle']));
-		foreach ($volumes as $v) {
-			$volume_page = ProjectInfo::addVolumePage ($project_id, $domain_page, $d['domain_handle'],
-					$v['volume_handle'], $v['volume_name'], $v['volume_desc']);
-			echo '		Added volume page for '; echo $v['volume_handle']; echo '<br/>';
-			flush();
-			ob_flush();
-
-			$parts = $db->getAll ("SELECT * FROM fsen_project_doc_volume_parts
-WHERE project_id=? AND domain_handle=? AND volume_handle=? ORDER BY display_order",
-				array ($project_id, $d['domain_handle'], $v['volume_handle']));
-			foreach ($parts as $p) {
-				$part_page = ProjectInfo::addPartPage ($project_id, $d['domain_handle'], $volume_page,
-						$p['part_handle'], $p['part_name'], $p['part_desc']);
-				echo '			Add part page for '; echo $p['part_handle']; echo '<br/>';
-				flush();
-				ob_flush();
-			}
-		}
-	}
 }
 
 // install single pages
@@ -316,84 +206,224 @@ $single_pths = array (
 				array ('areaHandle' => 'Main', 'btHandle' => 'fse_delete_account'),
 			)),
 		array ('cHandle' => 'fse_settings/applications', 'cName' => 'Applications', 'cDescription' => 'Your application keys',
-			'blocks' => array (array ('areaHandle' => 'Main', 'btHandle' => 'fse_app_keys'))),
+			'blocks' => array (array ('areaHandle' => 'Main', 'btHandle' => 'fse_app_key'))),
 		array ('cHandle' => 'fse_settings/projects', 'cName' => 'Projects', 'cDescription' => 'Your projects',
 			'blocks' => array (array ('areaHandle' => 'Main', 'btHandle' => 'fse_projects'))),
 	);
 
+echo '<br/>';
 echo 'Creating single pages... <br/>';
-foreach ($single_pages as $sp) {
-	echo 'Created single page for ' . $sp['cHandle'] . '...';
-	$p = SinglePage::getByHandle ($sp['cHandle']);
+foreach ($single_pths as $sp) {
+	$p = SinglePage::getByPath ('/' . $sp['cHandle']);
 	if ($p->getCollectionID() > 0) {
-		echo 'Already installed.<br/>';
-		flush();
-		ob_flush();
-		continue;
+		echo $sp['cHandle'] . ' had been installed; skip installing.<br/>';
+	}
+	else {
+		$p = SinglePage::add ($sp['cHandle'], $pkg);
+		if ($p instanceof SinglePage) {
+			$p->update (array('cName' => $sp['cName'], 'cDescription' => $sp['cDescription']));
+		}
+		echo $sp['cHandle'] . ' newly installed.<br/>';
 	}
 
-	$p = SinglePage::add ($sp['cHandle'], $pkg);
-	if (is_object ($p)) {
-		$p->update (array('cName' => $sp['cName'], 'cDescription' => $sp['cDescription']));
-
-		// add block to single pages
-		if (count ($sp['blocks']) > 0) {
-			foreach ($sp['blocks'] as $b) {
+	echo ' Check/add block to this single page...';
+	// add block to single pages
+	if (count ($sp['blocks']) > 0) {
+		foreach ($sp['blocks'] as $b) {
+			if (count ($p->getBlocks ($b['areaHandle'])) == 0) {
 				$block_type = BlockType::getByHandle ($b['btHandle']);
 				$area = new Area($b['areaHandle']);
 				$p->addBlock ($block_type, $area, array ("strTitle" => ''));
+			}
+		}
+	}
+	echo 'Done<br/>';
+
+	flush();
+	ob_flush();
+}
+
+// install jobs
+echo '<br/>';
+echo 'Installing jobs... <br/>';
+$jobs = array ('stat_user_activities');
+foreach ($jobs as $j) {
+	$jb = Job::getByHandle ($j);
+	if (is_object ($jb)) {
+		echo "Job $j had been installed; skip intalling. <br/>";
+	}
+	else {
+		#Job::installByPackage($j, $pkg);
+		Job::installByHandle ($j);
+		echo "Job $j newly installed. <br/>";
+	}
+
+	flush();
+	ob_flush();
+}
+
+// Apply full_stack_style as the site theme
+echo '<br/>';
+echo 'Applying full_stack_style as site theme...';
+$pt = PageTheme::getByHandle ('full_stack_style');
+$pt->applyToSite ();
+echo 'Done.<br/>';
+
+// Install event extends here
+#Events::extend('on_start', 'FSENLocalization', 'setupInterfaceLocalization4Request', 'models/fsen_localization.php');
+#Events::extend('on_before_render', 'FSENLocalization', 'setupInterfaceLocalization4Page', 'models/fsen_localization.php');
+
+$home_page = Page::getByID (HOME_CID);
+// disable full page cache for HOME page
+// $home_page->update (array ('cCacheFullPageContent' => 0));
+
+// create <lang>/project, <lang>/engineer pages
+$languages = array (
+	array (
+		'home_handle' => 'en', 'home_name' => 'HOME', 'home_desc' => 'English HOME',
+		'projects_handle' => 'project', 'projects_name' => 'Projects', 'projects_desc' => 'Projects',
+		'engineers_handle' => 'engineer', 'engineers_name' => 'Engineers', 'engineers_desc' => 'Engineers',
+		),
+	array (
+		'home_handle' => 'zh', 'home_name' => '首页', 'home_desc' => '中文版首页',
+		'projects_handle' => 'project', 'projects_name' => '项目', 'projects_desc' => '项目',
+		'engineers_handle' => 'engineer', 'engineers_name' => '工程师', 'engineers_desc' => '工程师',
+		),
+);
+
+echo '<br/>';
+echo '<br/>';
+echo 'Creating system pages... <br/>';
+foreach ($languages as $lang) {
+	echo '<br/>';
+	echo 'Creating localized home page for '; echo $lang['handle']; echo '... ';
+
+	$page_type = CollectionType::getByHandle ('localized_home');
+	if (!($page_type instanceof CollectionType)) {
+		echo 'Error: failed to get page type for localized home page.';
+		exit (0);
+	}
+
+	$localized_home_page = Page::getByPath ('/' . $lang['home_handle']);
+	if ($localized_home_page->getCollectionID() == false) {
+		$localized_home_page = $home_page->add ($page_type, array (
+				"cHandle" => $lang['home_handle'],
+				"cName" => $lang['home_name'],
+				"cDescription" => $lang['home_desc']));
+		if ($localized_home_page->getCollectionID() == false) {
+			echo 'Error: failed to crate localized home page. <br/>';
+			exit (0);
 		}
 	}
 
-	echo 'Done. <br/>';
+	echo 'Done <br/>';
 	flush();
 	ob_flush();
+
+	echo '<br/>';
+	echo 'Creating localized projects page for '; echo $lang['home_handle']; echo '... ';
+	$page_type = CollectionType::getByHandle ('localized_projects');
+	if (!($page_type instanceof CollectionType)) {
+		echo 'Error: failed to get page type for localized projects page.';
+		exit (0);
+	}
+
+	$localized_projects_page = Page::getByPath ('/' . $lang['home_handle'] . '/project');
+	if ($localized_projects_page->getCollectionID() == false) {
+		$localized_projects_page = $localized_home_page->add ($page_type, array (
+				"cHandle" => $lang['projects_handle'],
+				"cName" => $lang['projects_name'],
+				"cDescription" => $lang['projects_desc']));
+		if ($localized_projects_page->getCollectionID() == false) {
+			echo 'Error: failed to crate localized projects page. <br/>';
+			exit (0);
+		}
+	}
+	echo 'Done <br/>';
+	flush();
+	ob_flush();
+
+	echo '<br/>';
+	echo 'Creating localized engineers page for '; echo $lang['home_handle']; echo '... ';
+	$page_type = CollectionType::getByHandle ('localized_engineers');
+	if (!($page_type instanceof CollectionType)) {
+		echo 'Error: failed to get page type for localized engineers page.';
+		exit (0);
+	}
+
+	$localized_engineers_page = Page::getByPath ('/' . $lang['home_handle'] . '/engineer');
+	if ($localized_engineers_page->getCollectionID() == false) {
+		$localized_engineers_page = $localized_home_page->add ($page_type, array (
+				"cHandle" => $lang['engineers_handle'],
+				"cName" => $lang['engineers_name'],
+				"cDescription" => $lang['engineers_desc']));
+		if ($localized_engineers_page->getCollectionID() == false) {
+			echo 'Error: failed to create localized engineers page. <br/>';
+			exit (0);
+		}
+	}
+
+	echo 'Done <br/>';
+	flush();
+	ob_flush();
+
+	// create system pages
+	$doc_lang = $lang['home_handle'];
+	$project_id = 'sys-' . $doc_lang;
+
+	echo '<br/>';
+	echo "Creating document and community pages for $doc_lang ... <br />";
+
+	$db = Loader::db ();
+	$domains = $db->getAll ("SELECT * FROM fsen_project_doc_domains
+	WHERE project_id=? AND domain_handle != 'home'", array ($project_id));
+
+	foreach ($domains as $d) {
+		if ($d['domain_handle'] == 'document') {
+			$domain_page = $localized_home_page;
+		}
+		else {
+			$domain_page = ProjectInfo::addDomainPage ($project_id, $localized_home_page,
+					$d['domain_handle'], $d['domain_name'], $d['domain_desc']);
+			echo '	Added domain page for '; echo $d['domain_handle']; echo '<br/>';
+			flush();
+			ob_flush();
+		}
+
+		$volumes = $db->getAll ("SELECT * FROM fsen_project_doc_volumes
+	WHERE project_id=? AND domain_handle=? ORDER BY display_order", array ($project_id, $d['domain_handle']));
+		foreach ($volumes as $v) {
+			$volume_path = ProjectInfo::assemblePath ($project_id, $d['domain_handle'], $v['volume_handle']);
+			$volume_page = Page::getByPath ($volume_path);
+			if ($volume_page->getCollectionID() == false) {
+				$volume_page = ProjectInfo::addVolumePage ($project_id, $domain_page, $d['domain_handle'],
+						$v['volume_handle'], $v['volume_name'], $v['volume_desc']);
+				echo '		Added volume page for '; echo $v['volume_handle']; echo '<br/>';
+				flush();
+				ob_flush();
+			}
+
+			$parts = $db->getAll ("SELECT * FROM fsen_project_doc_volume_parts
+WHERE project_id=? AND domain_handle=? AND volume_handle=? ORDER BY display_order",
+				array ($project_id, $d['domain_handle'], $v['volume_handle']));
+			foreach ($parts as $p) {
+				$part_path = ProjectInfo::assemblePath ($project_id, $d['domain_handle'], $v['volume_handle'],
+						$p['part_handle']);
+				$part_page = Page::getByPath ($volume_path);
+				if ($part_page->getCollectionID() == false) {
+					$part_page = ProjectInfo::addPartPage ($project_id, $d['domain_handle'], $volume_page,
+							$p['part_handle'], $p['part_name'], $p['part_desc']);
+					echo '			Add part page for '; echo $p['part_handle']; echo '<br/>';
+					flush();
+					ob_flush();
+				}
+			}
+		}
+	}
 }
 
 Cache::flush();
 
 exit (0);
 
-#### rebuild blog home page for existed users.
-
-echo 'Creating blog home pages for FSEs... <br/>';
-flush();
-ob_flush();
-
-$en_blogs_page = Page::getByPath ('/en/blog');
-$zh_blogs_page = Page::getByPath ('/zh/blog');
-$fses = $db->getAll ("SELECT * FROM fse_basic_profiles ORDER BY create_time");
-$display_order = 100;
-foreach ($fses as $fse) {
-	if ($fse['def_locale'] == 'zh_CN') {
-		$doc_lang = 'zh';
-		$all_blogs_page = $zh_blogs_page;
-		$page_desc = $fse['nick_name'] . '的博客';
-	}
-	else {
-		$doc_lang = 'en';
-		$all_blogs_page = $en_blogs_page;
-		$page_desc = $fse['nick_name'] . '\'s Blogs';
-	}
-
-	$sys_project_id = SYSTEM_PROJECT_SHORTNAME . '-' . $doc_lang;
-
-	$db->Execute ("INSERT IGNORE fsen_project_doc_volume_parts
-    (project_id, domain_handle, volume_handle, part_handle, part_name, part_desc, required, display_order)
-VALUES (?, 'document', 'blog', ?, ?, ?, 1, ?)",
-			array ($sys_project_id, $fse['user_name'], $fse['nick_name'], $page_desc, $display_order));
-	ProjectInfo::addPartPage ($sys_project_id, 'document', $all_blogs_page,
-		$fse['user_name'], $fse['nick_name'], $page_desc);
-
-	echo '	Add blog home page for ' . $fse['user_name'] . '<br/>';
-	flush();
-	ob_flush();
-
-	$display_order += 1;
-}
-
-Cache::flush();
-
-echo 'ok and cache flushed <br/>';
-
-exit (0);
+?>
