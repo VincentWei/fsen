@@ -57,7 +57,7 @@ require_once ('helpers/misc.php');
 			</select>
 		</section>
 		<section class="description">
-<?php echo t('This site provides Chinese and English editions. Please choose your favorite language.') ?>
+<?php echo t('This site provides Chinese and English editions. Keep Private your favorite language.') ?>
 		</section>
 
 		<section class="fieldBase"><?php echo t('Nickname') ?>
@@ -84,7 +84,7 @@ require_once ('helpers/misc.php');
 
 		<section class="fieldBase"><?php echo t('Country/Region') ?>
 			<select id="LOCATIONCOUNTRY">
-				<option value="0"><?php echo t('--Please choose--') ?></option>
+				<option value="0"><?php echo t('--Keep Private--') ?></option>
 				<option value="1">中国</option>
 			</select>
 		</section>
@@ -92,14 +92,14 @@ require_once ('helpers/misc.php');
 
 		<section class="fieldBase"><?php echo t('State/Province') ?>
 			<select id="LOCATIONPROVINCE">
-				<option value="0"><?php echo t('--Please choose--') ?></option>
+				<option value="0"><?php echo t('--Keep Private--') ?></option>
 			</select>
 		</section>
 		<input id="LOCATIONPROVINCEWITHCODE" name="locationProvince" type="hidden" />
 
 		<section class="fieldBase"><?php echo t('District/County') ?>
 			<select id="LOCATIONDISTRICT">
-				<option value="0"><?php echo t('--Please choose--') ?></option>
+				<option value="0"><?php echo t('--Keep Private--') ?></option>
 			</select>
 		</section>
 		<input id="LOCATIONDISTRICTWITHCODE" name="locationDistrict" type="hidden" />
@@ -162,16 +162,16 @@ $('#LOCATIONCOUNTRY').change (function () {
 	$('#LOCATIONPROVINCE option').each (function () {
 	       	$(this).remove ();
        	});
-       	$('<option value="0"><?php echo t('--Please choose--') ?></option>').appendTo ($location_province);
+       	$('<option value="0"><?php echo t('--Keep Private--') ?></option>').appendTo ($location_province);
 
 	var $location_district = $('#LOCATIONDISTRICT');
 	$('#LOCATIONDISTRICT option').each (function () {
 	       	$(this).remove ();
        	});
-       	$('<option value="0"><?php echo t('--Please choose--') ?></option>').appendTo ($location_district);
+       	$('<option value="0"><?php echo t('--Keep Private--') ?></option>').appendTo ($location_district);
 
 	var division_id = $('#LOCATIONCOUNTRY').children ('option:selected').val ();
-	if (division_id != "na") {
+	if (division_id == "1") {
 		$location_province.attr ("disabled", "true");
 		$.get ("/index.php/tools/fetch_china_administrative_divisions.php?divisionID=" + division_id,
 			function (data) {
@@ -194,10 +194,11 @@ $('#LOCATIONPROVINCE').change (function () {
 	$('#LOCATIONDISTRICT option').each (function () {
 	       	$(this).remove ();
        	});
-       	$('<option value="0"><?php echo t('--Please choose--') ?></option>').appendTo ($location_district);
+       	$('<option value="0"><?php echo t('--Keep Private--') ?></option>').appendTo ($location_district);
 
+	var country_id = $('#LOCATIONCOUNTRY').children ('option:selected').val ();
 	var division_id = $('#LOCATIONPROVINCE').children ('option:selected').val ();
-	if (division_id != "na") {
+	if (country_id == '1' && division_id != "0") {
 		$location_district.attr ("disabled", "true");
 		$.get ("/index.php/tools/fetch_china_administrative_divisions.php?divisionID=" + division_id, 
 			function (data) {
@@ -401,26 +402,14 @@ $('#REGISTER').click (function (event) {
 	if (captcha_code == "") return;
 
 	var location_country = $('#LOCATIONCOUNTRY').val();
-	if (location_country == "0") {
-		$("#badLOCATION").show ();
-		return;
-	}
 	location_country = location_country + ":" + $('#LOCATIONCOUNTRY').find ('option:selected').text ();
 	$("#LOCATIONCOUNTRYWITHCODE").val (location_country);
 
 	var location_province = $('#LOCATIONPROVINCE').val();
-	if (location_province == "0") {
-		$("#badLOCATION").show ();
-		return;
-	}
 	location_province = location_province + ":" + $('#LOCATIONPROVINCE').find ('option:selected').text ();
 	$("#LOCATIONPROVINCEWITHCODE").val (location_province);
 
 	var location_district = $('#LOCATIONDISTRICT').val();
-	if (location_district == "0") {
-		$("#badLOCATION").show ();
-		return;
-	}
 	location_district = location_district + ":" + $('#LOCATIONDISTRICT').find ('option:selected').text ();
 	$("#LOCATIONDISTRICTWITHCODE").val (location_district);
 	$("#badLOCATION").hide ();

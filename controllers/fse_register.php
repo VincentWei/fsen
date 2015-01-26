@@ -129,7 +129,7 @@ VALUES (?, 'document', 'blog', ?, ?, ?, 1, ?)",
 
 		foreach (array ($location_country, $location_province, $location_district) as $location) {
 			$fragments = explode (":", $location, 2);
-			if (!preg_match ("/^[1-9][0-9]*$/", $fragments[0]) || strlen ($fragments[1]) < 2) {
+			if (!preg_match ("/^[0-9]*$/", $fragments[0]) || strlen ($fragments[1]) < 2) {
 				$this->set ('error', t('Bad location!'));
 				return;
 			}
@@ -146,6 +146,12 @@ VALUES (?, 'document', 'blog', ?, ?, ?, 1, ?)",
 		if ($db->Affected_Rows () == 0) {
 			$this->set ('error', t('Duplicated user name or email address.'));
 			return;
+		}
+
+		$res = $db->getOne ("SELECT fse_id FROM fsen_projects WHERE project_id='sys-en'");
+		if (strlen ($res) == 0) {
+			/* make this user as the owner of the system projects */
+			$db->Execute ("UPDATE fsen_projects SET fse_id=? WHERE project_id LIKE 'sys-__'", array ($fse_id));
 		}
 
 		if (preg_match ("/^zh/i", $user_locale)) {
