@@ -39,3 +39,5 @@
 
 		exit (0);
 
+1.	FSEN uses the PRO edtion of [GLYPHICONS](http://glyhpicons.com) and modify the Bootstrap v3.3.1 CSS file to include the icons in Glyphicons Pro edition. So you may need to buy the Pro edition of Glyphicons. Or you can use the un-modified Bootstrap CSS file.
+
