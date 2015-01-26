@@ -95,7 +95,7 @@ include ('inc/project_frags.php');
 			<label for="postSubject" class="sr-only">
 				<?php $my_text = t('Title of your reply'); echo $my_text ?>
 			</label>
-			<input class="form-control" type="text" name="postSubject"
+			<input class="form-control" type="text" name="postSubject" maxlength="64"
 					placeholder="<?php echo $my_text ?>" />
 		</div>
 

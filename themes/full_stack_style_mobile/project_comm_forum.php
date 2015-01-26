@@ -105,7 +105,7 @@ include ('inc/project_frags.php');
 			<label for="threadSubject" class="sr-only">
 				<?php $my_text = t('New thread subject'); echo $my_text ?>
 			</label>
-			<input type="text" class="form-control" name="threadSubject"
+			<input type="text" class="form-control" name="threadSubject" maxlength="64"
 				required="true" pattern=".{4,64}" placeholder="<?php echo $my_text ?>" />
 		</div>
 
