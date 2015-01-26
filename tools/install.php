@@ -273,7 +273,15 @@ echo 'Done.<br/>';
 #Events::extend('on_start', 'FSENLocalization', 'setupInterfaceLocalization4Request', 'models/fsen_localization.php');
 #Events::extend('on_before_render', 'FSENLocalization', 'setupInterfaceLocalization4Page', 'models/fsen_localization.php');
 
+// Apply page type for HOME page
+echo '<br/>';
+echo '<br/>';
+echo 'Applying page type for HOME...';
 $home_page = Page::getByID (HOME_CID);
+$home_type = CollectionType::getByHandle ('home');
+$home_page->update (array ('ctID' => $home_type->getCollectionTypeID()));
+echo 'Done. <br/>';
+
 // disable full page cache for HOME page
 // $home_page->update (array ('cCacheFullPageContent' => 0));
 
