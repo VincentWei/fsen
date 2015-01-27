@@ -57,7 +57,7 @@ require_once ('helpers/misc.php');
 			</select>
 		</section>
 		<section class="description">
-<?php echo t('This site provides Chinese and English editions. Keep Private your favorite language.') ?>
+<?php echo t('This site provides Chinese and English editions. Please choose your favorite language.') ?>
 		</section>
 
 		<section class="fieldBase"><?php echo t('Nickname') ?>
@@ -161,14 +161,14 @@ $('#LOCATIONCOUNTRY').change (function () {
 	var $location_province = $('#LOCATIONPROVINCE');
 	$('#LOCATIONPROVINCE option').each (function () {
 	       	$(this).remove ();
-       	});
-       	$('<option value="0"><?php echo t('--Keep Private--') ?></option>').appendTo ($location_province);
+	});
+	$('<option value="0"><?php echo t('--Keep Private--') ?></option>').appendTo ($location_province);
 
 	var $location_district = $('#LOCATIONDISTRICT');
 	$('#LOCATIONDISTRICT option').each (function () {
 	       	$(this).remove ();
-       	});
-       	$('<option value="0"><?php echo t('--Keep Private--') ?></option>').appendTo ($location_district);
+	});
+	$('<option value="0"><?php echo t('--Keep Private--') ?></option>').appendTo ($location_district);
 
 	var division_id = $('#LOCATIONCOUNTRY').children ('option:selected').val ();
 	if (division_id == "1") {
@@ -193,14 +193,14 @@ $('#LOCATIONPROVINCE').change (function () {
 	var $location_district = $('#LOCATIONDISTRICT');
 	$('#LOCATIONDISTRICT option').each (function () {
 	       	$(this).remove ();
-       	});
-       	$('<option value="0"><?php echo t('--Keep Private--') ?></option>').appendTo ($location_district);
+	});
+	$('<option value="0"><?php echo t('--Keep Private--') ?></option>').appendTo ($location_district);
 
 	var country_id = $('#LOCATIONCOUNTRY').children ('option:selected').val ();
 	var division_id = $('#LOCATIONPROVINCE').children ('option:selected').val ();
 	if (country_id == '1' && division_id != "0") {
 		$location_district.attr ("disabled", "true");
-		$.get ("/index.php/tools/fetch_china_administrative_divisions.php?divisionID=" + division_id, 
+		$.get ("/index.php/tools/fetch_china_administrative_divisions.php?divisionID=" + division_id,
 			function (data) {
 				var $location_district = $('#LOCATIONDISTRICT');
 				var obj = eval ('(' + data + ')');

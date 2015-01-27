@@ -115,29 +115,31 @@ $bt = BlockType::getByHandle('fse_register');
 		</section>
 
 		<section class="fieldBase">
-<?php echo t('Country/Region') ?>
+			<?php echo t('Country/Region') ?>
 			<select id="LOCATIONCOUNTRY">
-				<option value="0">--Please choose--</option>
+				<option value="0">
+					<?php echo t('--Keep Private--') ?>
+				</option>
 				<option value="1">中国</option>
 			</select>
 		</section>
 		<input id="LOCATIONCOUNTRYWITHCODE" name="locationCountry" type="hidden" />
 
 		<section class="fieldBase">
-<?php echo t('State/Province') ?>
+					<?php echo t('State/Province') ?>
 			<select id="LOCATIONPROVINCE">
 				<option value="0">
-<?php echo t('--Please choose--') ?>
+					<?php echo t('--Keep Private--') ?>
 				</option>
 			</select>
 		</section>
 		<input id="LOCATIONPROVINCEWITHCODE" name="locationProvince" type="hidden" />
 
 		<section class="fieldBase">
-<?php echo t('District/County') ?>
+			<?php echo t('District/County') ?>
 			<select id="LOCATIONDISTRICT">
 				<option value="0">
-<?php echo t('--Please choose--') ?>
+					<?php echo t('--Keep Private--') ?>
 				</option>
 			</select>
 		</section>
@@ -145,7 +147,7 @@ $bt = BlockType::getByHandle('fse_register');
 
 		<section class="description">
 			<span id="badLOCATION" style="display:none;">
-<?php echo t('Please choose your location!') ?>
+				<?php echo t('Please choose your location!') ?>
 			</span>
 		</section>
 
@@ -160,18 +162,18 @@ function on_change_country ()
 {
 	var $location_province = $('#LOCATIONPROVINCE');
 	$('#LOCATIONPROVINCE option').each (function () {
-	       	$(this).remove ();
-       	});
-       	$('<option value="0"><?php echo t('--Please choose--') ?></option>').appendTo ($location_province);
+		$(this).remove ();
+	});
+	$('<option value="0"><?php echo t('--Keep Private--') ?></option>').appendTo ($location_province);
 
 	var $location_district = $('#LOCATIONDISTRICT');
 	$('#LOCATIONDISTRICT option').each (function () {
-	       	$(this).remove ();
-       	});
-       	$('<option value="0">--Please choose--</option>').appendTo ($location_district);
+		$(this).remove ();
+	});
+	$('<option value="0">--Keep Private--</option>').appendTo ($location_district);
 
 	var division_id = $('#LOCATIONCOUNTRY').val ();
-	if (division_id != "0") {
+	if (division_id == "1") {
 		$location_province.attr ("disabled", "true");
 		$.ajaxSetup({async:false});
 		$.get ("/index.php/tools/fetch_china_administrative_divisions.php?divisionID=" + division_id,
@@ -199,11 +201,12 @@ function on_change_province ()
 	var $location_district = $('#LOCATIONDISTRICT');
 	$('#LOCATIONDISTRICT option').each (function () {
 	       	$(this).remove ();
-       	});
-       	$('<option value="0"><?php echo ('--Please choose--') ?></option>').appendTo ($location_district);
+   	});
+	$('<option value="0"><?php echo ('--Keep Private--') ?></option>').appendTo ($location_district);
 
+	var country_id = $('#LOCATIONCOUNTRY').val ();
 	var division_id = $('#LOCATIONPROVINCE').val ();
-	if (division_id != "0") {
+	if (country_id == "1" && division_id != "0") {
 		$location_district.attr ("disabled", "true");
 		$.ajaxSetup({async:false});
 		$.get ("/index.php/tools/fetch_china_administrative_divisions.php?divisionID=" + division_id,
@@ -360,26 +363,14 @@ $('#CHANGEPROFILE').click (function (event) {
 	}
 
 	var location_country = $('#LOCATIONCOUNTRY').val();
-	if (location_country == "0") {
-		$("#badLOCATION").show ();
-		return;
-	}
 	location_country = location_country + ":" + $('#LOCATIONCOUNTRY').find ('option:selected').text ();
 	$("#LOCATIONCOUNTRYWITHCODE").val (location_country);
 
 	var location_province = $('#LOCATIONPROVINCE').val();
-	if (location_province == "0") {
-		$("#badLOCATION").show ();
-		return;
-	}
 	location_province = location_province + ":" + $('#LOCATIONPROVINCE').find ('option:selected').text ();
 	$("#LOCATIONPROVINCEWITHCODE").val (location_province);
 
 	var location_district = $('#LOCATIONDISTRICT').val();
-	if (location_district == "0") {
-		$("#badLOCATION").show ();
-		return;
-	}
 	location_district = location_district + ":" + $('#LOCATIONDISTRICT').find ('option:selected').text ();
 	$("#LOCATIONDISTRICTWITHCODE").val (location_district);
 	$("#badLOCATION").hide ();

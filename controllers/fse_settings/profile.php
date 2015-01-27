@@ -105,7 +105,7 @@ class FseSettingsProfileController extends Controller {
 
 		foreach (array ($location_country, $location_province, $location_district) as $location) {
 			$fragments = explode (":", $location, 2);
-			if (!preg_match ("/^[1-9][0-9]*$/", $fragments[0]) || strlen ($fragments[1]) < 2) {
+			if (!preg_match ("/^[0-9]*$/", $fragments[0]) || strlen ($fragments[1]) < 2) {
 				$this->set ('error', t('Bad location!'));
 				return;
 			}
