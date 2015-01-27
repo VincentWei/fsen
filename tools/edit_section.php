@@ -126,6 +126,8 @@ $doc_lang = substr ($project_id, -2);
 
 $type_fragments = explode (":", $type_handle);
 if (count ($type_fragments) >= 4) {
+	$content_code_lang = 'plain';
+
 	/* defined wrapper and style */
 	$content_type = $type_fragments [0];
 	$content_format = $type_fragments [1];
@@ -165,6 +167,9 @@ else {
 			$content_format = 'plain';
 			$content_code_lang = 'plain';
 			break;
+		default:
+			$content_code_lang = 'plain';
+			break;
 		}
 	}
 
@@ -174,151 +179,124 @@ else {
 }
 ?>
 
-<form method="post" action="<?php echo $form_action ?>" enctype="multipart/form-data" class="validate form-horizontal">
-	<input type="hidden" name="fsenDocLang" value="<?php echo $doc_lang ?>" />
-	<input type="hidden" name="projectID" value="<?php echo $project_id ?>" />
-	<input type="hidden" name="domainHandle" value="<?php echo $domain_handle ?>" />
-	<input type="hidden" name="volumeHandle" value="<?php echo $section_info ['volume_handle'] ?>" />
-	<input type="hidden" name="partHandle" value="<?php echo $section_info ['part_handle'] ?>" />
-	<input type="hidden" name="chapterHandle" value="<?php echo $section_info ['chapter_handle'] ?>" />
-	<input type="hidden" name="sectionID" value="<?php echo $section_id ?>" />
+	<div class="btn-toolbar">
+		<?php Loader::element('content_type_list', array (
+						'output_type' => 'dropdown-menu',
+						'label' => t('Content Type: '),
+						'selected' => $content_type,
+						'data_target' => 'contentType')); ?>
 
-	<input type="hidden" name="formTokenName" value="<?php echo $form_token_name ?>" />
-	<input type="hidden" name="formToken" value="<?php echo $form_token ?>" />
+		<?php Loader::element('content_format_list', array (
+						'output_type' => 'dropdown-menu',
+						'label' => t('Content Format: '),
+						'selected' => $content_format,
+						'data_target' => 'contentFormat')); ?>
 
-	<div class="form-group">
-		<label for="contentType" class="col-md-4 control-label">
-			<?php echo t('Content Type: ') ?>
-		</label>
-		<div class="col-md-4">
-			<?php echo $form->select ('contentType', array (
-					'plain' => t('Plain Section'),
-					'pre' => t('Preformatted Text'),
-					'code' => t('Code'),
-					'quotation' => t('Quotation'),
-					'quotation-reverse' => t('Quotation Reverse'),
-					'address' => t('Address')), $content_type, array ("class" => "form-control")); ?>
+		<?php Loader::element('computer_language_list', array (
+						'output_type' => 'dropdown-menu',
+						'label' => t('Code Language: '),
+						'selected' => $content_code_lang,
+						'data_target' => 'contentCodeLang')); ?>
+	</div>
+
+	<div class="btn-toolbar">
+		<?php Loader::element('content_wrapper_list', array (
+						'output_type' => 'dropdown-menu',
+						'label' => t('Content Wrapper: '),
+						'selected' => $content_wrapper,
+						'data_target' => 'contentWrapper')); ?>
+
+		<?php Loader::element('content_style_list', array (
+						'output_type' => 'dropdown-menu',
+						'label' => t('Content Style: '),
+						'selected' => $content_style,
+						'data_target' => 'contentStyle')); ?>
+
+		<?php Loader::element('content_alignment_list', array (
+						'output_type' => 'dropdown-menu',
+						'label' => t('Content Alignment: '),
+						'selected' => $content_alignment,
+						'data_target' => 'contentAlignment')); ?>
+	</div>
+
+	<form id="formEditSection" method="post" action="<?php echo $form_action ?>" class="validate form-horizontal">
+		<input type="hidden" name="fsenDocLang" value="<?php echo $doc_lang ?>" />
+		<input type="hidden" name="projectID" value="<?php echo $project_id ?>" />
+		<input type="hidden" name="domainHandle" value="<?php echo $domain_handle ?>" />
+		<input type="hidden" name="volumeHandle" value="<?php echo $section_info ['volume_handle'] ?>" />
+		<input type="hidden" name="partHandle" value="<?php echo $section_info ['part_handle'] ?>" />
+		<input type="hidden" name="chapterHandle" value="<?php echo $section_info ['chapter_handle'] ?>" />
+		<input type="hidden" name="sectionID" value="<?php echo $section_id ?>" />
+
+		<input type="hidden" name="formTokenName" value="<?php echo $form_token_name ?>" />
+		<input type="hidden" name="formToken" value="<?php echo $form_token ?>" />
+
+		<input type="hidden" name="contentType" value="<?php echo $content_type ?>" />
+		<input type="hidden" name="contentFormat" value="<?php echo $content_format ?>" />
+		<input type="hidden" name="contentCodeLang" value="<?php echo $content_code_lang ?>" />
+		<input type="hidden" name="contentWrapper" value="<?php echo $content_wrapper ?>" />
+		<input type="hidden" name="contentStyle" value="<?php echo $content_style ?>" />
+		<input type="hidden" name="contentAlignment" value="<?php echo $content_alignment ?>" />
+
+		<div style="margin-bottom:15px;">
+			<label for="sectionSubject"><?php echo t('Title (optional): ') ?></label>
+			<input type="text" class="form-control" name="sectionSubject"  maxlength="40" style="width:100%;"
+						value="<?php echo h5($section_subject) ?>"/>
 		</div>
-	</div>
 
-	<div class="form-group">
-		<label for="contentFormat" class="col-md-4 control-label">
-			<?php echo t('Content Format: ') ?>
-		</label>
-		<div class="col-md-4">
-			<?php echo $form->select ('contentFormat', array (
-					'markdown' => 'Markdown',
-					'markdown_extra' => 'Markdown Extra',
-					'media_wiki' => 'Media Wiki Text',
-					'plain' => 'Plain',
-					), $content_format, array ("class" => "form-control")); ?>
+		<div style="margin-bottom:15px;">
+			<label for="sectionContent">
+				<?php echo t('Content (20 characters at least): ') ?>
+			</label>
+			<?php echo $form->textarea ('sectionContent', $section_content,
+					array ("required" => "true", "rows" => "15", "style" => "width:100%;")); ?>
 		</div>
-		<p>
-			<?php echo t('Plain is only valid for Code and Preformatted type.') ?>
-		</p>
-	</div>
 
-	<div class="form-group">
-		<label for="contentCodeLang" class="col-md-4 control-label">
-			<?php echo t('Code Language: ') ?>
-		</label>
-		<div class="col-md-4">
-			<select name="contentCodeLang" class="form-control">
-				<?php Loader::element('computer_language_list', array ('selected_value' => $content_code_lang)); ?>
-			</select>
+		<div id="fsen-addNewSection-fileRows">
 		</div>
-		<p>
-			<?php echo t('Only valid for Code type.') ?>
-		</p>
-	</div>
 
-	<div class="form-group">
-		<label for="contentWrapper" class="col-md-4 control-label">
-			<?php echo t('Content Wrapper: ') ?>
-		</label>
-		<div class="col-md-4">
-			<select name="contentWrapper" class="form-control">
-				<?php Loader::element('content_wrapper_list', array ('selected_value' => $content_wrapper)); ?>
-			</select>
-		</div>
-		<p>
-			<?php echo t('Refer to <a target="_blank" href="http://getbootstrap.com">HERE</a> for Bootstrap.') ?>
-		</p>
-	</div>
-
-	<div class="form-group">
-		<label for="contentStyle" class="col-md-4 control-label">
-			<?php echo t('Content Style: ') ?>
-		</label>
-		<div class="col-md-4">
-			<select name="contentStyle" class="form-control">
-				<?php Loader::element('content_style_list', array ('selected_value' => $content_style)); ?>
-			</select>
-		</div>
-		<p>
-			<?php echo t('Only valid when Wrapper is not none.') ?>
-		</p>
-	</div>
-
-	<div class="form-group">
-		<label for="contentAlignment" class="col-md-4 control-label">
-			<?php echo t('Content Alignment: ') ?>
-		</label>
-		<div class="col-md-4">
-			<select name="contentAlignment" class="form-control">
-				<?php Loader::element('content_alignment_list', array ('selected_value' => $content_alignment)); ?>
-			</select>
-		</div>
-		<p>
-			<?php echo t('Only valid when Wrapper is not none.') ?>
-		</p>
-	</div>
-
-	<div style="margin-bottom:15px;">
-		<label for="sectionSubject"><?php echo t('Title (optional): ') ?></label>
-		<input type="text" class="form-control" name="sectionSubject"  maxlength="40" style="width:100%;"
-					value="<?php echo h5($section_subject) ?>"/>
-	</div>
-
-	<div style="margin-bottom:15px;">
-		<label for="sectionContent">
-			<?php echo t('Content (20 characters at least): ') ?>
-		</label>
-       	<?php echo $form->textarea ('sectionContent', $section_content,
-				array ("required" => "true", "rows" => "7", "style" => "width:100%;")); ?>
-	</div>
-
-	<div id="fsen-addNewSection-fileRows">
-	</div>
-
-	<div style="margin-bottom:15px">
-		<label for="attachmentFile0">
-			<?php echo t('Attached Files: ') ?>
-		</label>
-<?php
-		for ($i = 0; $i < ProjectInfo::MAX_ATTACHED_FILES; $i++) {
-			if ($attached_files [$i] > 0) {
-				$attached_file = File::getByID ($attached_files [$i]);
-				echo $al->file ("attachmentFile$i", "attachmentFile$i", t('Choose another File'), $attached_file);
+		<div style="margin-bottom:15px">
+			<label for="attachmentFile0">
+				<?php echo t('Attached Files: ') ?>
+			</label>
+	<?php
+			for ($i = 0; $i < ProjectInfo::MAX_ATTACHED_FILES; $i++) {
+				if ($attached_files [$i] > 0) {
+					$attached_file = File::getByID ($attached_files [$i]);
+					echo $al->file ("attachmentFile$i", "attachmentFile$i", t('Choose another File'), $attached_file);
+				}
+				else {
+					echo $al->file("attachmentFile$i", "attachmentFile$i", t('Upload or Choose File'));
+				}
 			}
-			else {
-				echo $al->file("attachmentFile$i", "attachmentFile$i", t('Upload or Choose File'));
-			}
-		}
-?>
-	</div>
+	?>
+		</div>
 
-	<input type="submit" name="fsen-add-section-submit" value="submit" style="display: none"
-		id="fsen-form-submit-button" />
+		<input type="submit" name="fsen-add-section-submit" value="submit" style="display: none"
+			id="fsen-form-submit-button" />
 
-	<div class="ccm-buttons dialog-buttons">
-		<a href="javascript:void(0)" onclick="jQuery.fn.dialog.closeTop();"
-			class="btn ccm-button-left cancel"><?php echo t('Cancel') ?></a>
-		<a href="javascript:void(0)" onclick="$('#fsen-form-submit-button').get(0).click()"
-			class="ccm-button-right accept btn primary"><?php echo t('Save') ?> <i class="icon-ok icon-white"></i></a>
-	</div>
-</form>
+		<div class="ccm-buttons dialog-buttons">
+			<a href="javascript:void(0)" onclick="jQuery.fn.dialog.closeTop();"
+				class="btn ccm-button-left cancel"><?php echo t('Cancel') ?></a>
+			<a href="javascript:void(0)" onclick="$('#fsen-form-submit-button').get(0).click()"
+				class="ccm-button-right accept btn primary"><?php echo t('Save') ?> <i class="icon-ok icon-white"></i></a>
+		</div>
+	</form>
 </div>
+
+<script type="text/javascript">
+$('.dropdown-toggle').dropdown();
+
+$('.menuitem').click (function (e) {
+	e.preventDefault ();
+	var value = $(this).attr ('data-value');
+	var text = $(this).text ();
+	var target = $(this).attr ('data-target');
+	$('#formEditSection input[name="' + target + '"]').val (value);
+	$(this).parent().parent().prev().children ('m').text (text);
+});
+
+</script>
 
 <?php
 require_once(DIR_FILES_ELEMENTS_CORE . '/dialog_footer.php');

@@ -106,7 +106,47 @@ $form_token = hash_hmac ('md5', time (), $chapter_handle);
 $_SESSION [$form_token_name] = $form_token;
 ?>
 
-	<form method="post" action="<?php echo $form_action ?>" enctype="multipart/form-data" class="validate form-horizontal">
+	<div class="btn-toolbar">
+		<?php Loader::element('content_type_list', array (
+						'output_type' => 'dropdown-menu',
+						'label' => t('Content Type: '),
+						'selected' => 'plain',
+						'data_target' => 'contentType')); ?>
+
+		<?php Loader::element('content_format_list', array (
+						'output_type' => 'dropdown-menu',
+						'label' => t('Content Format: '),
+						'selected' => 'markdown',
+						'data_target' => 'contentFormat')); ?>
+
+		<?php Loader::element('computer_language_list', array (
+						'output_type' => 'dropdown-menu',
+						'label' => t('Code Language: '),
+						'selected' => 'plain',
+						'data_target' => 'contentCodeLang')); ?>
+	</div>
+
+	<div class="btn-toolbar">
+		<?php Loader::element('content_wrapper_list', array (
+						'output_type' => 'dropdown-menu',
+						'label' => t('Content Wrapper: '),
+						'selected' => 'none',
+						'data_target' => 'contentWrapper')); ?>
+
+		<?php Loader::element('content_style_list', array (
+						'output_type' => 'dropdown-menu',
+						'label' => t('Content Style: '),
+						'selected' => 'none',
+						'data_target' => 'contentStyle')); ?>
+
+		<?php Loader::element('content_alignment_list', array (
+						'output_type' => 'dropdown-menu',
+						'label' => t('Content Alignment: '),
+						'selected' => 'none',
+						'data_target' => 'contentAlignment')); ?>
+	</div>
+
+	<form id="formAddNewSection" method="post" action="<?php echo $form_action ?>" class="validate form-horizontal">
 		<input type="hidden" name="fsenDocLang" value="<?php echo $doc_lang ?>" />
 		<input type="hidden" name="cID" value="<?php echo $page_id ?>" />
 		<input type="hidden" name="projectID" value="<?php echo $project_id ?>" />
@@ -119,103 +159,12 @@ $_SESSION [$form_token_name] = $form_token;
 		<input type="hidden" name="formTokenName" value="<?php echo $form_token_name ?>" />
 		<input type="hidden" name="formToken" value="<?php echo $form_token ?>" />
 
-		<div class="form-group form-group-sm">
-			<label for="contentType" class="col-md-3 control-label">
-				<?php echo t('Content Type: ') ?>
-			</label>
-			<div class="col-md-3">
-				<?php echo $form->select ('contentType', array (
-						'plain' => t('Plain Section'),
-						'pre' => t('Preformatted Text'),
-						'code' => t('Code'),
-						'quotation' => t('Quotation'),
-						'quotation-reverse' => t('Quotation Reverse'),
-						'address' => t('Address')), 'plain', array ("class" => "form-control")); ?>
-			</div>
-		</div>
-
-		<div class="form-group form-group-sm">
-			<label for="contentFormat" class="col-md-3 control-label">
-				<?php echo t('Content Format: ') ?>
-			</label>
-			<div class="col-md-3">
-				<?php echo $form->select ('contentFormat', array (
-						'markdown' => 'Markdown',
-						'markdown_extra' => 'Markdown Extra',
-						'media_wiki' => 'Media Wiki Text',
-						'plain' => 'Plain',
-						), 'markdown', array ("class" => "form-control")); ?>
-			</div>
-			<div class="col-md-6">
-				<p class="help-block">
-					<?php echo t('Plain is only valid for Code and Preformatted type.') ?>
-				</p>
-			</div>
-		</div>
-
-		<div class="form-group form-group-sm">
-			<label for="contentCodeLang" class="col-md-4 control-label">
-				<?php echo t('Code Language: ') ?>
-			</label>
-			<div class="col-md-3">
-				<select name="contentCodeLang" class="form-control">
-					<?php Loader::element('computer_language_list', array ('selected_value' => 'plain')); ?>
-				</select>
-			</div>
-			<div class="col-md-6">
-				<p class="help-block">
-					<?php echo t('Only valid for Code type.') ?>
-				</p>
-			</div>
-		</div>
-
-		<div class="form-group form-group-sm">
-			<label for="contentWrapper" class="col-md-3 control-label">
-				<?php echo t('Content Wrapper: ') ?>
-			</label>
-			<div class="col-md-3">
-				<select name="contentWrapper" class="form-control">
-					<?php Loader::element('content_wrapper_list', array ('selected_value' => 'none')); ?>
-				</select>
-			</div>
-			<div class="col-md-6">
-				<p class="help-block">
-					<?php echo t('Refer to <a target="_blank" href="http://getbootstrap.com">HERE</a> for Bootstrap.') ?>
-				</p>
-			</div>
-		</div>
-
-		<div class="form-group form-group-sm">
-			<label for="contentStyle" class="col-md-3 control-label">
-				<?php echo t('Content Style: ') ?>
-			</label>
-			<div class="col-md-3">
-				<select name="contentStyle" class="form-control">
-					<?php Loader::element('content_style_list', array ('selected_value' => 'none')); ?>
-				</select>
-			</div>
-			<div class="col-md-6">
-				<p class="help-block">
-					<?php echo t('Only valid when Wrapper is not none.') ?>
-				</p>
-			</div>
-		</div>
-
-		<div class="form-group form-group-sm">
-			<label for="contentAlignment" class="col-md-3 control-label">
-				<?php echo t('Content Alignment: ') ?>
-			</label>
-			<div class="col-md-3">
-				<select name="contentAlignment" class="form-control">
-					<?php Loader::element('content_alignment_list', array ('selected_value' => 'none')); ?>
-				</select>
-			</div>
-			<div class="col-md-6">
-				<p class="help-block">
-					<?php echo t('Only valid when Wrapper is not none.') ?>
-				</p>
-			</div>
-		</div>
+		<input type="hidden" name="contentType" value="plain" />
+		<input type="hidden" name="contentFormat" value="markdown" />
+		<input type="hidden" name="contentCodeLang" value="plain" />
+		<input type="hidden" name="contentWrapper" value="none" />
+		<input type="hidden" name="contentStyle" value="none" />
+		<input type="hidden" name="contentAlignment" value="none" />
 
 		<div style="margin-bottom:15px;">
 			<label for="sectionSubject"><?php echo t('Title (optional): ') ?></label>
@@ -226,7 +175,7 @@ $_SESSION [$form_token_name] = $form_token;
 			<label for="sectionContent">
 				<?php echo t('Content: ') ?>
 			</label>
-			<textarea name="sectionContent" rows="7" style="width:100%;"
+			<textarea name="sectionContent" rows="15" style="width:100%;"
 					required="true" placeholder="<?php echo t('Content (20 characters at least)') ?>"></textarea>
 		</div>
 
@@ -254,6 +203,21 @@ $_SESSION [$form_token_name] = $form_token;
 	</div>
 
 </div>
+
+
+<script lang="javascript">
+$('.dropdown-toggle').dropdown();
+
+$('.menuitem').click (function (e) {
+	e.preventDefault ();
+	var value = $(this).attr ('data-value');
+	var text = $(this).text ();
+	var target = $(this).attr ('data-target');
+	$('#formAddNewSection input[name="' + target + '"]').val (value);
+	$(this).parent().parent().prev().children ('m').text (text);
+});
+
+</script>
 
 <?php
 require_once(DIR_FILES_ELEMENTS_CORE . '/dialog_footer.php');
