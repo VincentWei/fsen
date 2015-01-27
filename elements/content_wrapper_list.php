@@ -43,10 +43,38 @@ $items = array (
 				'col-md-11' => 'Bootstrap 11/12 Column',
 				'col-md-12' => 'Bootstrap 12/12 Column',
 			);
-foreach ($items as $item_key => $item_value) {
+
+if ($output_type == 'dropdown-menu') {
+?>
+<div class="btn-group">
+	<button class="btn btn-default btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+		<?php echo $label ?>
+		<m><?php echo $items[$selected] ?></m>
+		<span class="caret"></span>
+	</button>
+	<ul class="dropdown-menu" role="menu">
+<?php
+	foreach ($items as $item_key => $item_value) {
+?>
+		<li>
+			<a class="menuitem" href="#" data-value="<?php echo $item_key ?>" data-target="<?php echo $data_target ?>">
+				<?php echo $item_value ?>
+			</a>
+		</li>
+<?php
+	}
+?>
+	</ul>
+</div>
+<?php
+}
+else {
+	foreach ($items as $item_key => $item_value) {
 ?>
 	<option value="<?php echo $item_key ?>"
-		<?php echo ($selected_value == $item_key)?'selected="selected"':''; ?>><?php echo $item_value ?></option>
+		<?php echo ($selected_value == $item_key)?'selected="selected"':''; ?>><?php echo $item_value ?>
+	</option>
 <?php
+	}
 }
 ?>

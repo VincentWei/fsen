@@ -29,14 +29,10 @@
 defined('C5_EXECUTE') or die('Access Denied.');
 
 $items = array (
-				'none' => 'None',
-				'well' => 'Well',
-				'default' => 'Default Panel',
-				'primary' => 'Primary Panel',
-				'success' => 'Success Panel',
-				'info' => 'Information Panel',
-				'warning' => 'Warning Panel',
-				'danger' => 'Danger Panel',
+				'markdown' => 'Markdown',
+				'markdown_extra' => 'Markdown Extra',
+				'media_wiki' => 'Media Wiki',
+				'plain' => 'Plain',
 			);
 
 if ($output_type == 'dropdown-menu') {
