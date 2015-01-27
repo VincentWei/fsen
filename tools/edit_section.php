@@ -117,7 +117,7 @@ if (isset ($error_info)) {
 	exit (0);
 }
 
-$form_token_name = 'formToken4EditSection';
+$form_token_name = '#formEditSection';
 $form_token = hash_hmac ('md5', time (), $section_id);
 $_SESSION [$form_token_name] = $form_token;
 
@@ -285,6 +285,8 @@ else {
 </div>
 
 <script type="text/javascript">
+auto_save_form_content ('#formEditSection', 'input[name="sectionSubject"]', 'textarea[name="sectionContent"]');
+
 $('.dropdown-toggle').dropdown();
 
 $('.menuitem').click (function (e) {

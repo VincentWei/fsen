@@ -115,6 +115,22 @@ function display_pas (data)
 			$('#popupStatusBar>div').removeClass ('alert-none');
 			$('#popupStatusBar>div').addClass ('alert-' + obj.status);
 		}
+
+		if (obj.status == 'success' && obj.form_id != '') {
+			if (supports_local_storage ()) {
+				var fields = localStorage.getItem (obj.form_id);
+				if (fields != undefined && fields != null && fields != '') {
+					fields = fields.split (',');
+
+					var f;
+					for (f in fields) {
+						var key = obj.form_id + fields[f];
+						localStorage.removeItem (key);
+					}
+				}
+			}
+		}
+
 		$('#popupStatusBar').removeClass ("fade-away");
 		$('#popupStatusBar').addClass ("fade-in");
 		setTimeout (function () {
@@ -122,6 +138,80 @@ function display_pas (data)
 				$('#popupStatusBar').addClass ("fade-away");
 			}, 5000);
 	}
+}
+
+function supports_local_storage ()
+{
+	return ('localStorage' in window) && (window['localStorage'] != null);
+}
+
+function auto_save_form_content () {
+	this.form_id = arguments[0];
+	this.fields = new Array ();
+
+	var i;
+	for (i = 1; i < arguments.length; i++) {
+		this.fields[i-1] = ' ' + arguments [i];
+	}
+
+	this.init = function () {
+		this.restore_form_content ();
+
+		var f;
+		for (f in this.fields) {
+			var element_id = this.form_id + this.fields[f];
+			$(element_id).on ('input', this.on_change);
+		}
+	}
+
+	this.on_timeout = function () {
+		this.store_form_content ();
+	}
+
+	this.timer_id = 0;
+	this.on_change = function () {
+		if (this.timer_id != 0) {
+			clearTimeout (this.timer_id);
+			this.timer_id = 0;
+		}
+		this.timer_id = setTimeout (function () {this.on_timeout();}, 3000);
+	}
+
+	this.store_form_content = function  () {
+		if (supports_local_storage ()) {
+			var f;
+			for (f in this.fields) {
+				var field_name = this.fields[f];
+				var key = this.form_id + field_name;
+				var value = $(this.form_id + field_name).val ();
+				if (value != undefined && value != null && value != '') {
+					localStorage.setItem (key, value);
+				}
+				else {
+					localStorage.removeItem (key);
+				}
+			}
+			localStorage.setItem (this.form_id, this.fields);
+		}
+	}
+
+	this.restore_form_content = function  () {
+		if (supports_local_storage ()) {
+			var f;
+			for (f in this.fields) {
+				var field_name = this.fields[f];
+				var key = this.form_id + field_name;
+				var value = localStorage.getItem (key);
+				if (value != undefined && value != null && value != '') {
+					$(this.form_id + field_name).val (value);
+				}
+			}
+		}
+	}
+
+	this.init();
+
+	return this;
 }
 
 $(document).ready (function() {

@@ -33,15 +33,17 @@ Class PageActionStatus {
 	public $action;
 	public $status;
 	public $message;
+	public $form_id;
 }
 
-function set_page_action_status ($page_id, $action, $status, $message)
+function set_page_action_status ($page_id, $action, $status, $message, $form_id = '')
 {
 	$pas = New PageActionStatus;
 	$pas->time = time();
 	$pas->action = $action;
 	$pas->status = $status;
 	$pas->message = $message;
+	$pas->form_id = '' . $form_id;
 
 	$_SESSION["PAS-$page_id"] = $pas;
 }
@@ -52,9 +54,10 @@ function get_page_action_status ($page_id, $clear = TRUE)
 	if ($pas == NULL) {
 		$pas = New PageActionStatus;
 		$pas->time = 0;
-		$pas->action = "na";
-		$pas->status = "clear";
-		$pas->message = "Unknown message.";
+		$pas->action = 'na';
+		$pas->status = 'clear';
+		$pas->message = 'N/A';
+		$pas->form_id = '';
 	}
 	else if ($clear) {
 		unset ($_SESSION["PAS-$page_id"]);

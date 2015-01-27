@@ -101,7 +101,7 @@ $al = Loader::helper ('concrete/asset_library');
 $form_action = "/fse_settings/projects/add_new_section";
 $doc_lang = substr ($project_id, -2);
 
-$form_token_name = 'formToken4AddNewSection';
+$form_token_name = '#formAddNewSection';
 $form_token = hash_hmac ('md5', time (), $chapter_handle);
 $_SESSION [$form_token_name] = $form_token;
 ?>
@@ -206,6 +206,8 @@ $_SESSION [$form_token_name] = $form_token;
 
 
 <script lang="javascript">
+auto_save_form_content ('#formAddNewSection', 'input[name="sectionSubject"]', 'textarea[name="sectionContent"]');
+
 $('.dropdown-toggle').dropdown();
 
 $('.menuitem').click (function (e) {
