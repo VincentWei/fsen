@@ -31,6 +31,7 @@ defined('C5_EXECUTE') or die('Access Denied.');
 require_once ('helpers/check_login.php');
 require_once ('helpers/check_passwd.php');
 require_once ('helpers/fsen/ProjectInfo.php');
+require_once ('helpers/fsen/FSEInfo.php');
 
 class FseRegisterController extends Controller {
 
@@ -152,6 +153,12 @@ VALUES (?, 'document', 'blog', ?, ?, ?, 1, ?)",
 		if (strlen ($res) == 0) {
 			/* make this user as the owner of the system projects */
 			$db->Execute ("UPDATE fsen_projects SET fse_id=? WHERE project_id LIKE 'sys-__'", array ($fse_id));
+
+			$fse_info = FSEInfo::getNameInfo ($fse_id);
+			ProjectInfo::setUserAsOwner ('sys-en', $fse_id);
+			ProjectInfo::addOwnerMemberSection ('sys-en', $fse_info);
+			ProjectInfo::setUserAsOwner ('sys-zh', $fse_id);
+			ProjectInfo::addOwnerMemberSection ('sys-zh', $fse_info);
 		}
 
 		if (preg_match ("/^zh/i", $user_locale)) {

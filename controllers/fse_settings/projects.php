@@ -368,6 +368,7 @@ class FseSettingsProjectsController extends Controller {
 	}
 
 	private function add_owner_member_section ($project_id) {
+		ProjectInfo::setUserAsOwner ($project_id, $_SESSION['FSEInfo']['fse_id']);
 		ProjectInfo::addOwnerMemberSection ($project_id);
 	}
 
