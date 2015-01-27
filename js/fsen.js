@@ -128,6 +128,7 @@ function display_pas (data)
 						localStorage.removeItem (key);
 					}
 				}
+				localStorage.removeItem (obj.form_id);
 			}
 		}
 
