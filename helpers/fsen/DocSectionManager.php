@@ -207,7 +207,7 @@ class DocSectionManager {
 			break;
 
 		case 'quotation-reverse':
-			$section_content_html = "<blockquote class=\"blockquote-reverse\>\n" . $section_content_formatted . "\n</blockquote>\n";
+			$section_content_html = "<blockquote class=\"blockquote-reverse\">\n" . $section_content_formatted . "\n</blockquote>\n";
 			break;
 
 		case 'address':
