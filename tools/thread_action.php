@@ -48,6 +48,7 @@ $thread_action = $_REQUEST['threadAction'];
 
 $doc_lang = substr ($project_id, -2);
 
+$title = t('Thread Action');
 if ($domain_handle == 'community') {
 	switch ($thread_action) {
 	case 'top':
