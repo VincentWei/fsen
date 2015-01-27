@@ -155,7 +155,7 @@ include('inc/project_frags.php');
 				class="section-action visible-on-manage-community-right"
 				style="margin-top: 0; margin-right: 5px;">
 			<a class="launch-modal"
-					href="/index.php/tools/thread_action.php?fsenDocLang=<?php echo $doc_lang ?>&cID=<?php echo $page_id ?>&projectID=<?php $project_id ?>&domainHandle=<?php $domain_handle ?>&volumeHandle=<?php $volume_handle ?>&partHandle=<?php $part_handle ?>&chapterHandle=<?php echo $thd['chapter_handle'] ?>&threadAction=untop">
+					href="/index.php/tools/thread_action.php?fsenDocLang=<?php echo $doc_lang ?>&cID=<?php echo $page_id ?>&projectID=<?php echo $project_id ?>&domainHandle=<?php echo $domain_handle ?>&volumeHandle=<?php echo $volume_handle ?>&partHandle=<?php echo $part_handle ?>&chapterHandle=<?php echo $thd['chapter_handle'] ?>&threadAction=untop">
 				<m class="glyphicon glyphicon-down-arrow"></m>
 			</a>
 		</span>
@@ -208,7 +208,7 @@ include('inc/project_frags.php');
 		<span class="section-action visible-on-manage-community-right"
 				style="margin-top: 0; margin-right: 5px;">
 			<a class="launch-modal"
-					href="/index.php/tools/thread_action.php?fsenDocLang=<?php echo $doc_lang ?>&cID=<?php echo $page_id ?>&projectID=<?php $project_id ?>&domainHandle=<?php $domain_handle ?>&volumeHandle=<?php $volume_handle ?>&partHandle=<?php $part_handle ?>&chapterHandle=<?php echo $thd['chapter_handle'] ?>&threadAction=top">
+					href="/index.php/tools/thread_action.php?fsenDocLang=<?php echo $doc_lang ?>&cID=<?php echo $page_id ?>&projectID=<?php echo $project_id ?>&domainHandle=<?php echo $domain_handle ?>&volumeHandle=<?php echo $volume_handle ?>&partHandle=<?php echo $part_handle ?>&chapterHandle=<?php echo $thd['chapter_handle'] ?>&threadAction=top">
 				<m class="glyphicon glyphicon-up-arrow"></m>
 			</a>
 		</span>
