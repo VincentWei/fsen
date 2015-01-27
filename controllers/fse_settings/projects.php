@@ -1077,7 +1077,7 @@ class FseSettingsProjectsController extends Controller {
 			return;
 		}
 
-		set_page_action_status ($page_id, t('New Section'), 'success', t('Succeed to add a new section.'));
+		set_page_action_status ($page_id, t('New Section'), 'success', t('Succeed to add a new section.'), $form_token_name);
 		header ("Location: $page_path");
 	}
 
@@ -1176,7 +1176,8 @@ class FseSettingsProjectsController extends Controller {
 			return;
 		}
 
-		set_page_action_status ($page_id, t('Edit Section'), 'success', t('Succeed to add a new section version.'));
+		set_page_action_status ($page_id, t('Edit Section'), 'success',
+				t('Succeed to add a new section version.'), $form_token_name);
 		header ("Location: $page_path");
 	}
 
