@@ -697,7 +697,7 @@ div.ccm-ui textarea {
 
 .full-stack .inline-list.small {
 	padding:0px 10px;
-	font-size:10px;
+	font-size:12px;
 	font-weight:normal;
 	line-height:14px;
 	text-align:center;
@@ -782,7 +782,7 @@ a#logo:hover {
 }
 
 a#logo p {
-	font-size:10px;
+	font-size:12px;
 	line-height:15px;
 	font-style:inherit;
 	margin:2px 0 0 0;
@@ -1256,7 +1256,7 @@ a#logo span:first-letter {
 
 .full-stack section.author-info p {
 	color: #ccc;
-	font-size: 10px;
+	font-size: 12px;
 	line-height: 1;
 	margin: 0;
 	padding: 2px 0;
@@ -1301,7 +1301,7 @@ a#logo span:first-letter {
 }
 
 .full-stack footer.section-block > section.block-right ul {
-	font-size: 10px;
+	font-size: 12px;
 	margin: 0;
 	padding: 0;
 }
@@ -1756,7 +1756,7 @@ a#logo span:first-letter {
 .full-stack footer.comment-block p,
 .full-stack footer.comment-block li {
 	color: #888;
-	font-size: 10px;
+	font-size: 12px;
 }
 
 .full-stack footer.comment-block li {
