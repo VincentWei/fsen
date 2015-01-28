@@ -41,7 +41,7 @@ $bt = BlockType::getByHandle('fse_register');
 			<h1><?php echo t('Sign in') ?></h1>
 		</header>
 		<section class="fieldBase"><?php echo t('Username or Email') ?>
-			<input id="login_USERNAME" type="text" maxlength="20" name="username"
+			<input id="login_USERNAME" type="text" maxlength="128" name="username"
 				required="true" />
 		</section>
 		<section class="description">
