@@ -33,7 +33,7 @@ require_once ('helpers/fsen/ProjectInfo.php');
 
 function output_domain_struct ($project_id, $domain_handle, $domain_title, $domain_desc, $domain_long_desc)
 {
-	$doc_lang = $_REUQEST['fsenDocLang'];
+	$doc_lang = $_REQUEST['fsenDocLang'];
 	if (!isset ($doc_lang)) {
 		$doc_lang = 'en';
 	}
