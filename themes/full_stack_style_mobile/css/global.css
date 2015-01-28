@@ -1116,15 +1116,15 @@ a#logo span:first-letter {
 }
 
 .full-stack footer.section-block > section.block-right ul {
-	font-size: 10px;
+	font-size: 12px;
 	margin: 0;
 	padding: 0;
 }
 
 .full-stack footer.section-block > section.block-left p {
-	font-size: 10px;
+	font-size: 14px;
 	margin: 0;
-	padding: 2px 10px;
+	padding: 1px 10px;
 }
 
 /* DIALOG */
