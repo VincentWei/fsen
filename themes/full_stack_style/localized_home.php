@@ -88,7 +88,7 @@ if (!isset ($doc_lang)) {
 		nr_comments, nr_praise, nr_favorites, heat_level,
 		project_id, domain_handle, volume_handle, part_handle, chapter_handle
 	FROM fsen_document_sections_$doc_lang
-	ORDER BY heat_level DESC, create_time DESC LIMIT 20");
+	ORDER BY heat_level DESC, create_time DESC LIMIT 10");
 		Cache::set ('HotCommentedPosts', $doc_lang, $hot_commented_posts, 60*5);
 	}
 
