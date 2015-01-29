@@ -123,7 +123,13 @@ function output_domain_block ($project_id)
 			<div class="row">
 				<section class="col-md-6">
 					<header>
-						<h1><?php echo t('Recent News') ?></h1>
+						<h1>
+							<?php echo t('Recent News') ?>
+							<a href="<?php echo ProjectInfo::assemblePath ($project_id, 'community', 'general', 'news') ?>"
+									class="small">
+								<span class="glyphicon glyphicon-link"></span>
+							</a>
+						</h1>
 					</header>
 					<ul class="list-unstyled" style="padding-left:10px;">
 <?php
@@ -131,14 +137,14 @@ foreach ($recent_news as $cpt) {
 	$link = ProjectInfo::assemblePath ($project_id, 'community', 'general', 'news', $cpt['chapter_handle']);
 ?>
 <li>
-	<h4 class="text-ellipsis">
+	<p class="lead text-ellipsis">
 		<span class="text-major-<?php echo $page_style ?>">
 			<?php echo '[' . date ('Y-m-d', $cpt['create_ctime']) . ']' ?>
 		</span>
 		<a class="text-outline-<?php echo $page_style ?>" href="<?php echo $link ?>">
 			<?php echo h5($cpt['chapter_name']) ?>
 		</a>
-	</h4>
+	</p>
 </li>
 <?php
 }
@@ -147,7 +153,13 @@ foreach ($recent_news as $cpt) {
 				</section>
 				<section class="col-md-6">
 					<header>
-						<h1><?php echo t('Active Discussions') ?></h1>
+						<h1>
+							<?php echo t('Active Discussions') ?>
+							<a href="<?php echo ProjectInfo::assemblePath ($project_id, 'community', 'general', 'discussion') ?>"
+									class="small">
+								<span class="glyphicon glyphicon-link"></span>
+							</a>
+						</h1>
 					</header>
 					<ul class="list-unstyled" style="padding-left:10px;">
 <?php
@@ -271,15 +283,6 @@ foreach ($latest_documents as $cpt) {
 			<section>
 				<?php  $a = new Area('Main'); $a->display($c); ?>
 			</section>
-			</div>
-		</section>
-
-		<section class="container-fluid">
-			<div class="row">
-			<header>
-<h1><?php echo t('Code Repository') ?></h1>
-			</header>
-			<?php  $a = new Area('CodeRepository'); $a->display($c); ?>
 			</div>
 		</section>
 	</article>
