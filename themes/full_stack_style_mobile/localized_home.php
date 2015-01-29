@@ -236,6 +236,7 @@ if (!isset ($doc_lang)) {
 				<h1>
 					<?php echo t('Hot Commented Posts') ?>
 				</h1>
+				<ul class="list-group">
 <?php
 	foreach ($hot_commented_posts as $pst) {
 		$author_info = FSEInfo::getNameInfo ($pst['author_id']);
@@ -257,8 +258,7 @@ if (!isset ($doc_lang)) {
 			$plain_content['title'] = $page->getCollectionName ();
 		}
 ?>
-<div class="panel panel-default">
-	<div class="panel-body">
+	<li class="list-group-item">
 		<div class="media" style="margin-top:15px">
 			<a class="media-left" href="<?php echo FSEInfo::getPersonalHomeLink($author_info) ?>">
 				<img class="middle-avatar" src="<?php echo $author_info['avatar_url'] ?>"
@@ -330,12 +330,13 @@ if (!isset ($doc_lang)) {
 				</div>
 			</div>
 		</div>
-	</div>
-</div>
+	</li>
 <?php
 	}
 ?>
-			</div>
+				</ul>
+			</div><!-- col-md-6 -->
+
 			<div class="col-md-6">
 				<h1>
 					<?php echo t('Latest Posts') ?>
