@@ -144,6 +144,7 @@ if (isset($message)) {
 	</article>
 <?php
 	$this->inc('inc/footer.php', array ('doc_lang' => $doc_lang));
+	$this->inc('inc/status-bar.php');
 ?>
 
 </div>

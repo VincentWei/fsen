@@ -444,8 +444,6 @@ else {
 	</fieldset>
 </form>
 
-<?php Loader::element('page_action_status_bar'); ?>
-
 <script type="text/javascript">
 var bootstrapButton = $.fn.button.noConflict();
 $.fn.bootstrapBtn = bootstrapButton;
@@ -570,7 +568,6 @@ function onChooseFile (obj) {
 function chooseIcon (project_id) {
 	curr_project_id = project_id;
 	ccm_chooseAsset = onChooseFile;
-
 
 	var bootstrapButton = $.fn.button.noConflict();
 	$.fn.bootstrapBtn = bootstrapButton;
