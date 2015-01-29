@@ -50,14 +50,14 @@ class FseSettingsProjectsController extends Controller {
 				'', 'home', 'Home', 'Homepage of the project', 'The pages are under construction, please visit later. (Please delete this when ready.)', 0,
 				'', 'download', 'Download', 'Download source code', 'Nothing is currently available for download.', 1,
 				'', 'document',  'Documentation', 'Read documents first when you have any problem', 'The developer has not yet released any documents.', 2,
-				'', 'community', 'Community', 'Discuss things with others', 'The developer has not yet created any community venue to gather and exchange ideas.', 3,
+				'', 'community', 'Community', 'Discuss things with others', 'We currently provide forums to gather and exchange ideas.', 3,
 				'', 'contribute', 'Contribute', 'Get involved', 'Nothing is currently available.', 4,
 				'', 'misc', 'About', 'Copyright, Authors, and Credits', 'A person\'s interest and passion of several people, may become the power to change the world even a little.', 5),
 			'zh' => array (
 				'', 'home', '主页', '项目主页', '本项目页面正在构建中，请稍后访问！（准备好后请删除此内容。）', 0,
 				'', 'download', '下载', '下载源代码', '抱歉，当前无内容可供下载。', 1,
 				'', 'document',  '文档', '遇到问题？文档能帮您！', '抱歉，开发者尚未发布任何文档。', 2,
-				'', 'community', '社区', '和其他人一起讨论、交流', '抱歉，开发者尚未创建任何社区场所供收集和交换想法。', 3,
+				'', 'community', '社区', '和其他人一起讨论、交流', '开发者当前提供基于论坛的社区交流场所。', 3,
 				'', 'contribute', '参与', '参与其中，贡献力量！', '抱歉，当前无内容。', 4,
 				'', 'misc', '关于', '著作权、作者及荣誉榜', '一个人的兴趣，几个人的激情，可能成为改变世界的力量，哪怕只有一点点。', 5),
 			);
