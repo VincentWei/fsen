@@ -39,6 +39,15 @@ else {
 	if (strlen ($icon_url) < 10) {
 		$icon_url = '/files/images/icon-fsen-144.png';
 	}
+
+	if ($project_info['repo_location'] == 'github') {
+		$repo_frags = explode ('.', $project_info['repo_name']);
+		if (count ($repo_frags) == 2) {
+			$gh_user = $repo_frags [0];
+			$gh_repo = $repo_frags [1];
+		}
+	}
+
 ?>
 
 <div class="row">
@@ -50,6 +59,13 @@ else {
 	<section class="col-md-9">
 			<h1><?php echo h5($project_info['name']) ?></h1>
 			<p><?php echo h5($project_info['short_desc']) ?></p>
+<?php if (isset ($gh_user)) { ?>
+			<div class="text-left">
+				<iframe src="http://ghbtns.com/github-btn.html?user=<?php echo $gh_user ?>&amp;repo=<?php echo $gh_repo ?>&amp;type=watch&amp;count=true&amp;size=large" allowtransparency="true" frameborder="0" scrolling="0" width="170" height="30"></iframe>
+				<iframe src="http://ghbtns.com/github-btn.html?user=<?php echo $gh_user ?>&amp;repo=<?php echo $gh_repo ?>&amp;type=fork&amp;count=true&amp;size=large" allowtransparency="true" frameborder="0" scrolling="0" width="170" height="30"></iframe>
+				</a>
+			</div>
+<?php } ?>
 	</section>
 </div>
 
