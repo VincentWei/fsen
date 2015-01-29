@@ -50,7 +50,7 @@ if (!isset ($doc_lang)) {
 	$db = Loader::db();
 	$top_projects = Cache::get ('TopProjects', $doc_lang);
 	if ($top_projects == false) {
-		$top_projects = $db->getAll ("SELECT project_id, name FROM fsen_projects
+		$top_projects = $db->getAll ("SELECT project_id, name, heat_level FROM fsen_projects
 	WHERE project_id LIKE '%-$doc_lang' AND project_id NOT LIKE 'sys-__'
 	ORDER BY heat_level DESC LIMIT 5");
 		Cache::set ('TopProjects', $doc_lang, $top_projects, 60*60*24);
@@ -58,7 +58,7 @@ if (!isset ($doc_lang)) {
 
 	$top_blogs = Cache::get ('TopBlogs', $doc_lang);
 	if ($top_blogs == false) {
-		$top_blogs = $db->getAll ("SELECT part_handle, chapter_handle, chapter_name
+		$top_blogs = $db->getAll ("SELECT part_handle, chapter_handle, chapter_name, heat_level
 	FROM fsen_project_doc_volume_part_chapters_$doc_lang
 	WHERE project_id='sys-$doc_lang' AND domain_handle='document' AND volume_handle='blog'
 	ORDER BY heat_level DESC LIMIT 5");
@@ -70,7 +70,7 @@ if (!isset ($doc_lang)) {
 		$hot_discussions = $db->getAll ("SELECT project_id, domain_handle, volume_handle, part_handle,
 		chapter_handle, chapter_name, chapter_desc, heat_level, nr_sections
 	FROM fsen_project_doc_volume_part_chapters_$doc_lang
-	WHERE domain_handle='community' ORDER BY heat_level DESC LIMIT 20");
+	WHERE domain_handle='community' ORDER BY heat_level DESC LIMIT 5");
 		Cache::set ('HotDiscussions', $doc_lang, $hot_discussions, 60*10);
 	}
 
@@ -168,13 +168,74 @@ if (!isset ($doc_lang)) {
 </div> <!-- container -->
 
 <article class="formal-content">
+
+	<div class="container">
+		<div class="row">
+			<div class="col-md-4">
+				<ul class="list-group">
+					<li class="list-group-item list-group-item-info">
+						<?php echo t('Top Projects') ?>
+					</li>
+<?php
+		foreach ($top_projects as $prj) {
+			$link = "/$doc_lang/project/" . $prj['project_id'];
+?>
+					<li class="list-group-item">
+						<span class="badge"><?php echo $prj['heat_level'] ?></span>
+						<a href="<?php echo $link ?>"><?php echo h5($prj['name']) ?></a>
+					</li>
+<?php
+		}
+?>
+				</ul>
+			</div>
+			<div class="col-md-4">
+				<ul class="list-group">
+					<li class="list-group-item list-group-item-info">
+						<?php echo t('Top Blogs') ?>
+					</li>
+<?php
+		foreach ($top_blogs as $blg) {
+			$link = ProjectInfo::assemblePath ("sys-$doc_lang", 'document',
+					'blog', $blg['part_handle'], $blg['chapter_handle']);
+?>
+					<li class="list-group-item">
+						<span class="badge"><?php echo $blg['heat_level'] ?></span>
+						<a href="<?php echo $link ?>"><?php echo h5($blg['chapter_name']) ?></a>
+					</li>
+<?php
+		}
+?>
+				</ul>
+			</div>
+			<div class="col-md-4">
+				<ul class="list-group">
+					<li class="list-group-item list-group-item-info">
+						<?php echo t('Hot Disucssions') ?>
+					</li>
+<?php
+		foreach ($hot_discussions as $cpt) {
+			$link = ProjectInfo::assemblePath ($cpt['project_id'], $cpt['domain_handle'],
+					$cpt['volume_handle'], $cpt['part_handle'], $cpt['chapter_handle']);
+?>
+					<li class="list-group-item">
+						<span class="badge"><?php echo $cpt['heat_level'] ?></span>
+						<a href="<?php echo $link ?>"><?php echo h5($cpt['chapter_name']) ?></a>
+					</li>
+<?php
+		}
+?>
+				</ul>
+			</div>
+		</div><!-- row -->
+	</div><!-- container -->
+
 	<div class="container-fluid">
-		<section>
-			<h1>
-				<?php echo t('Hot Commented Posts') ?>
-			</h1>
-			<div class="row">
-				<div class="col-md-8">
+		<div class="row">
+			<div class="col-md-6">
+				<h1>
+					<?php echo t('Hot Commented Posts') ?>
+				</h1>
 <?php
 	foreach ($hot_commented_posts as $pst) {
 		$author_info = FSEInfo::getNameInfo ($pst['author_id']);
@@ -197,39 +258,39 @@ if (!isset ($doc_lang)) {
 		}
 ?>
 <div class="panel panel-default">
-<div class="panel-body">
-	<div class="media" style="margin-top:15px">
-		<a class="media-left" href="<?php echo FSEInfo::getPersonalHomeLink($author_info) ?>">
-			<img class="middle-avatar" src="<?php echo $author_info['avatar_url'] ?>"
-					alt="<?php echo h5($author_info['nick_name']) ?>">
-		</a>
-		<div class="media-body" style="width:100%">
-			<h4 class="media-heading">
-				<span class="badge"><?php echo $pst['heat_level'] ?></span>
-				<a href="<?php echo $link ?>"><?php echo h5($plain_content['title']) ?></a>
-			</h4>
-			<p>
-				<?php echo $plain_content['content'] ?>
-			</p>
-			<ul class="text-right list-unstyled">
-				<li class="inline-list">
-					<a data-toggle="collapse" href="#divCommentsFor<?php echo $pst['id'] ?>"
-							aria-expanded="false" aria-controls="divCommentsFor<?php echo $pst['id'] ?>">
-						<span class="glyphicon glyphicon-comments"></span>
-						<?php echo $pst['nr_comments'] ?>
-					</a>
-				</li>
-				<li class="inline-list">
-					<span class="glyphicon glyphicon-thumbs-up text-outline-default"></span>
-					<span class="text-outline-default"><?php echo $pst['nr_praise'] ?></span>
-				</li>
-				<li class="inline-list">
-					<span class="glyphicon glyphicon-heart text-outline-default"></span>
-					<span class="text-outline-default"><?php echo $pst['nr_favorites'] ?></span>
-				</li>
-			</ul>
-			<div class="collapse" id="divCommentsFor<?php echo $pst['id'] ?>">
-				<hr/>
+	<div class="panel-body">
+		<div class="media" style="margin-top:15px">
+			<a class="media-left" href="<?php echo FSEInfo::getPersonalHomeLink($author_info) ?>">
+				<img class="middle-avatar" src="<?php echo $author_info['avatar_url'] ?>"
+						alt="<?php echo h5($author_info['nick_name']) ?>">
+			</a>
+			<div class="media-body" style="width:100%">
+				<h4 class="media-heading">
+					<span class="badge"><?php echo $pst['heat_level'] ?></span>
+					<a href="<?php echo $link ?>"><?php echo h5($plain_content['title']) ?></a>
+				</h4>
+				<p>
+					<?php echo $plain_content['content'] ?>
+				</p>
+				<ul class="text-right list-unstyled">
+					<li class="inline-list">
+						<a data-toggle="collapse" href="#divCommentsFor<?php echo $pst['id'] ?>"
+								aria-expanded="false" aria-controls="divCommentsFor<?php echo $pst['id'] ?>">
+							<span class="glyphicon glyphicon-comments"></span>
+							<?php echo $pst['nr_comments'] ?>
+						</a>
+					</li>
+					<li class="inline-list">
+						<span class="glyphicon glyphicon-thumbs-up text-outline-default"></span>
+						<span class="text-outline-default"><?php echo $pst['nr_praise'] ?></span>
+					</li>
+					<li class="inline-list">
+						<span class="glyphicon glyphicon-heart text-outline-default"></span>
+						<span class="text-outline-default"><?php echo $pst['nr_favorites'] ?></span>
+					</li>
+				</ul>
+				<div class="collapse" id="divCommentsFor<?php echo $pst['id'] ?>">
+					<hr/>
 <?php
 		foreach ($comments as $comment) {
 			$author_info = FSEInfo::getNameInfo ($comment['author_id']);
@@ -242,17 +303,17 @@ if (!isset ($doc_lang)) {
 				$replied_name_info = FSEInfo::getNameInfo ($comment ['replied_author_id']);
 			}
 ?>
-			<div class="media" style="margin-top:5px;">
-				<a class="media-left" href="<?php echo FSEInfo::getPersonalHomeLink($author_info) ?>">
-					<img class="small-avatar" src="<?php echo $author_info['avatar_url'] ?>"
-							alt="<?php echo h5($author_info['nick_name']) ?>">
-				</a>
-				<div class="media-body">
-					<p style="line-height: 1; margin-top:0; margin-bottom:0;">
-						<small><strong class="text-info"><?php echo h5($author_info['nick_name']) ?></strong></small>
-					</p>
-					<p style="line-height: 1; margin-top:0; margin-bottom:0;">
-						<small>
+				<div class="media" style="margin-top:5px;">
+					<a class="media-left" href="<?php echo FSEInfo::getPersonalHomeLink($author_info) ?>">
+						<img class="small-avatar" src="<?php echo $author_info['avatar_url'] ?>"
+								alt="<?php echo h5($author_info['nick_name']) ?>">
+					</a>
+					<div class="media-body">
+						<p style="line-height: 1; margin-top:0; margin-bottom:0;">
+							<small><strong class="text-info"><?php echo h5($author_info['nick_name']) ?></strong></small>
+						</p>
+						<p style="line-height: 1; margin-top:0; margin-bottom:0;">
+							<small>
 <?php
 			if ($replied_name_info != false) {
 				$tmp = t('Reply to ') . '<strong class="text-info">' . $replied_name_info['nick_name'] . ': </strong>';
@@ -260,91 +321,25 @@ if (!isset ($doc_lang)) {
 			}
 			echo h5($comment['body']) . '</small>';
 ?>
-					</p>
+						</p>
+					</div>
 				</div>
-			</div>
 <?php
 		}
 ?>
+				</div>
 			</div>
 		</div>
 	</div>
 </div>
-</div>
 <?php
 	}
 ?>
-				</div>
-				<div class="col-md-4">
-					<ul class="list-group">
-						<li class="list-group-item list-group-item-info">
-							<?php echo t('Top Projects') ?>
-						</li>
-<?php
-		foreach ($top_projects as $prj) {
-			$link = "/$doc_lang/project/" . $prj['project_id'];
-?>
-						<li class="list-group-item">
-							<a href="<?php echo $link ?>"><?php echo h5($prj['name']) ?></a>
-						</li>
-<?php
-		}
-?>
-					</ul>
-					<ul class="list-group">
-						<li class="list-group-item list-group-item-info">
-							<?php echo t('Top Blogs') ?>
-						</li>
-<?php
-		foreach ($top_blogs as $blg) {
-			$link = ProjectInfo::assemblePath ("sys-$doc_lang", 'document',
-					'blog', $blg['part_handle'], $blg['chapter_handle']);
-?>
-						<li class="list-group-item">
-							<a href="<?php echo $link ?>"><?php echo h5($blg['chapter_name']) ?></a>
-						</li>
-<?php
-		}
-?>
-					</ul>
-				</div>
-			</div>
-		</section>
-	</div>
-
-	<div class="v-seperator">
-	</div>
-
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-md-6">
-				<section>
-					<h1>
-						<?php echo t('Hot Disucssions') ?>
-					</h1>
-					<ul class="list-group">
-<?php
-		foreach ($hot_discussions as $cpt) {
-			$link = ProjectInfo::assemblePath ($cpt['project_id'], $cpt['domain_handle'],
-					$cpt['volume_handle'], $cpt['part_handle'], $cpt['chapter_handle']);
-?>
-<li class="list-group-item">
-	<span class="badge"><?php echo $cpt['heat_level'] ?></span>
-	<h4 class="list-group-item-heading"><a href="<?php echo $link ?>"><?php echo h5($cpt['chapter_name']) ?></a></h4>
-	<p><?php echo h5($cpt['chapter_desc']) ?></p>
-</li>
-<?php
-		}
-?>
-					</ul>
-				</section>
 			</div>
 			<div class="col-md-6">
-				<section>
-					<h1>
-						<?php echo t('Latest Posts') ?>
-					</h1>
-				</section>
+				<h1>
+					<?php echo t('Latest Posts') ?>
+				</h1>
 				<ul class="list-group">
 <?php
 		foreach ($latest_posts as $pst) {
@@ -368,6 +363,18 @@ if (!isset ($doc_lang)) {
 				</ul>
 			</div>
 		</div>
+	</div>
+
+	<div class="v-seperator">
+	</div>
+
+	<div class="container-fluid">
+		<section>
+			<div class="row">
+				<div class="col-md-8">
+				</div>
+			</div>
+		</section>
 	</div>
 
 </article>
