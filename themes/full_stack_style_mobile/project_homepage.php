@@ -137,14 +137,14 @@ foreach ($recent_news as $cpt) {
 	$link = ProjectInfo::assemblePath ($project_id, 'community', 'general', 'news', $cpt['chapter_handle']);
 ?>
 <li>
-	<p class="lead text-ellipsis">
+	<h3 class="text-ellipsis">
 		<span class="text-major-<?php echo $page_style ?>">
 			<?php echo '[' . date ('Y-m-d', $cpt['create_ctime']) . ']' ?>
 		</span>
 		<a class="text-outline-<?php echo $page_style ?>" href="<?php echo $link ?>">
 			<?php echo h5($cpt['chapter_name']) ?>
 		</a>
-	</p>
+	</h3>
 </li>
 <?php
 }
@@ -167,14 +167,14 @@ foreach ($hot_discussions as $cpt) {
 	$link = ProjectInfo::assemblePath ($project_id, 'community', 'general', 'discussion', $cpt['chapter_handle']);
 ?>
 <li>
-	<h4 class="text-ellipsis">
+	<h3 class="text-ellipsis">
 		<span class="text-major-<?php echo $page_style ?>">
 			<?php echo '[' . date ('Y-m-d', $cpt['create_ctime']) . ']' ?>
 		</span>
 		<a class="text-outline-<?php echo $page_style ?>" href="<?php echo $link ?>">
 			<?php echo h5($cpt['chapter_name']) ?>
 		</a>
-	</h4>
+	</h3>
 </li>
 <?php
 }
@@ -194,14 +194,14 @@ foreach ($must_documents as $cpt) {
 			$cpt['volume_handle'], $cpt['part_handle'], $cpt['chapter_handle']);
 ?>
 <li>
-	<h4 class="text-ellipsis">
+	<h3 class="text-ellipsis">
 		<span class="text-major-<?php echo $page_style ?>">
 			<?php echo '[' . date ('Y-m-d', $cpt['create_ctime']) . ']' ?>
 		</span>
 		<a class="text-outline-<?php echo $page_style ?>" href="<?php echo $link ?>">
 			<?php echo h5($cpt['chapter_name']) ?>
 		</a>
-	</h4>
+	</h3>
 </li>
 <?php
 }
@@ -219,14 +219,14 @@ foreach ($latest_documents as $cpt) {
 			$cpt['volume_handle'], $cpt['part_handle'], $cpt['chapter_handle']);
 ?>
 <li>
-	<h4 class="text-ellipsis">
+	<h3 class="text-ellipsis">
 		<span class="text-major-<?php echo $page_style ?>">
 			<?php echo '[' . date ('Y-m-d', $cpt['create_ctime']) . ']' ?>
 		</span>
 		<a class="text-outline-<?php echo $page_style ?>" href="<?php echo $link ?>">
 			<?php echo h5($cpt['chapter_name']) ?>
 		</a>
-	</h4>
+	</h3>
 </li>
 <?php
 }
