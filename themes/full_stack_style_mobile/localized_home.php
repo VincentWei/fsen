@@ -88,7 +88,7 @@ if (!isset ($doc_lang)) {
 		nr_comments, nr_praise, nr_favorites, heat_level,
 		project_id, domain_handle, volume_handle, part_handle, chapter_handle
 	FROM fsen_document_sections_$doc_lang
-	ORDER BY heat_level DESC, create_time DESC LIMIT 10");
+	ORDER BY heat_level DESC, create_time DESC LIMIT 20");
 		Cache::set ('HotCommentedPosts', $doc_lang, $hot_commented_posts, 60*5);
 	}
 
@@ -259,7 +259,7 @@ if (!isset ($doc_lang)) {
 		}
 ?>
 	<li class="list-group-item">
-		<div class="media" style="margin-top:15px">
+		<div class="media">
 			<a class="media-left" href="<?php echo FSEInfo::getPersonalHomeLink($author_info) ?>">
 				<img class="middle-avatar" src="<?php echo $author_info['avatar_url'] ?>"
 						alt="<?php echo h5($author_info['nick_name']) ?>">
