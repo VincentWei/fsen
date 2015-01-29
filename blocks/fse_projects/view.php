@@ -282,13 +282,13 @@ if (count ($projects) > 0) {
 		</div>
 	</div>
 	<div class="form-group form-group-sm">
-		<label for="selectRepoLocation" class="col-md-3 control-label"><?php echo $title_repo_name ?></label>
+		<label for="inputRepoName" class="col-md-3 control-label"><?php echo $title_repo_name ?></label>
 		<div class="col-md-7">
-			<input type="text" class="general-item form-control"
+			<input name="inputRepoName" type="text" class="general-item form-control"
 					data-project="<?php echo $project['project_id'] ?>"
 					data-org="<?php echo h5($project['repo_name']) ?>"
 					data-item="repo_name"
-				placeholder="Repository name" value="<?php echo h5($project['repo_name']) ?>" />
+					placeholder="username.repo" value="<?php echo h5($project['repo_name']) ?>" />
 		</div>
 	</div>
 </div>
@@ -399,14 +399,17 @@ else {
 					<?php Loader::element('repository_location_list'); ?>
 			</select>
 		</section>
+		<section class="description">
+<?php echo t('Only GitHub supported so far.') ?>
+		</section>
 
 		<section class="fieldBase">
 			<?php echo t('Repo. Name') ?>
 			<input name="repoName" type="text" maxlength="255"
-				placeholder="" />
+				placeholder="username.repo" />
 		</section>
 		<section class="description">
-<?php echo t('Repository Name (optional).') ?>
+<?php echo t('Repository Name (e.g., VincentWei.fsen).') ?>
 		</section>
 
 		<section class="fieldBase">
