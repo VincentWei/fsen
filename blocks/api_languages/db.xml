@@ -29,7 +29,7 @@
  */
 -->
 <schema version="0.3">
-	<table name="btFseAppKey">
+	<table name="btApiLanguages">
 		<field name="bID" type="I">
 			<key />
 			<unsigned />
@@ -38,44 +38,45 @@
 		</field>
 	</table>
 
-	<table name="fse_app_keys">
-		<field name="app_key" type="C" size="128">
+	<table name="api_languages">
+		<field name="iso_639_1_code" type="C" size="2">
 			<key />
 			<notnull />
 		</field>
-		<field name="fse_id" type="C" size="32">
+		<field name="iso_639_2_b_code" type="C" size="3">
+		</field>
+		<field name="iso_639_2_t_code" type="C" size="3">
+		</field>
+		<field name="iso_639_3_code" type="C" size="3">
+		</field>
+		<field name="self_name" type="C2" size="64">
 			<notnull />
 		</field>
-		<field name="app_name" type="C2" size="32">
-			<notnull />
-		</field>
-		<field name="app_desc" type="C2" size="255">
-			<notnull />
-		</field>
-		<field name="app_url" type="C" size="255">
-		</field>
-		<field name="app_icon_url" type="C" size="255">
-		</field>
-		<field name="status" type="L">
-			<notnull />
-			<default value="1" />
-		</field>
-		<field name="last_token" type="C" size="32">
-			<notnull />
-			<default value="" />
-		</field>
-		<field name="token_time" type="T">
-			<notnull />
-			<default value="2015-01-01" />
-		</field>
-		<field name="create_time" type="T">
-			<notnull />
+		<field name="note" type="C2" size="255">
 		</field>
 
-		<index name="idx_fse_id_app_name">
+		<index name="idx_iso_639_2_b_code">
+			<col>iso_639_2_b_code</col>
+		</index>
+		<index name="iso_639_3_code">
+			<col>iso_639_3_code</col>
+		</index>
+	</table>
+
+	<table name="api_language_localized_names">
+		<field name="iso_639_1_code" type="C" size="2">
+			<notnull />
+		</field>
+		<field name="locale" type="C" size="6">
+			<notnull />
+		</field>
+		<field name="localized_name" type="C2" size="64">
+		</field>
+
+		<index name="idx_key">
 			<unique />
-			<col>fse_id</col>
-			<col>app_name</col>
+			<col>iso_639_1_code</col>
+			<col>locale</col>
 		</index>
 	</table>
 </schema>

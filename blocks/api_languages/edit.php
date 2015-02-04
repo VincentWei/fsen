@@ -28,17 +28,4 @@
  */
 defined('C5_EXECUTE') or die('Access Denied.');
 
-require_once ('helpers/fsen/ProjectInfo.php');
-
-$project_info = ProjectInfo::getBasicInfo ($projectID);
-if ($project_info == false) {
-	echo "<p>no such project</p>";
-}
-else {
-?>
-	<h2><?php echo ProjectInfo::getDomainDesc ($projectID, 'home'); ?></h2>
-	<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-
-<?php
-}
-?>
+$this->inc('form.php');

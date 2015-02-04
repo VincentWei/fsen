@@ -1,5 +1,4 @@
-<?xml version="1.0"?>
-<!--
+<?php
 /**
  * This file is a part of FullStackEngineer.Net Project.
  *
@@ -27,16 +26,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
--->
-<schema version="0.3">
-	<table name="btProjectCustomBanner">
-		<field name="bID" type="I">
-			<key />
-			<unsigned />
-		</field>
-		<field name="projectID" type="C" size="64">
-			<notnull />
-		</field>
-	</table>
-</schema>
+defined('C5_EXECUTE') or die("Access Denied.");
+?>
+
+<div class="ccm-block-field-group">
+<h4>Settings</h4><br/>
+
+<div id="strTitle" class="clearfix">
+	<?php echo $form->label ('strTitle', 'Title: ')?>
+	<div class="input">
+                <?php echo  $form->text ('strTitle', $strTitle, array ('style' => 'width: 250px')); ?>
+        </div>
+</div>
+
+</div>
 

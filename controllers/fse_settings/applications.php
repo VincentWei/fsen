@@ -86,7 +86,7 @@ class FseSettingsApplicationsController extends Controller {
 		}
 
 		$app_key = hash_hmac ("sha256", $app_name . microtime (), $fse_id);
-		$res = $db->Execute ("INSERT INTO fse_app_keys VALUES (?, ?, ?, ?, ?, ?, NOW())",
+		$res = $db->Execute ("INSERT INTO fse_app_keys (app_key, fse_id, app_name, app_desc, app_url, app_icon_url, create_time) VALUES (?, ?, ?, ?, ?, ?, NOW())",
 			array ($app_key, $fse_id, $app_name, $app_desc, $app_url, $app_icon_url));
 
 		$this->set ('success', t('New app key has been created!'));

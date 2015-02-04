@@ -28,19 +28,5 @@
  */
 defined('C5_EXECUTE') or die('Access Denied.');
 
-class ProjectCustomBannerBlockController extends BlockController {
-
-	protected $btInterfaceWidth = 400;
-	protected $btInterfaceHeight = 200;
-	protected $btTable = 'btProjectCustomBanner';
-	protected $btDescription = "The block for project custom banner.";
-	protected $btName = "Project Custom Banner";
-	protected $btWrapperClass = 'ccm-ui';
-	protected $btCacheBlockRecord = true;
-	protected $btCacheBlockOutput = true;
-	protected $btCacheBlockOutputOnPost = true;
-	protected $btCacheBlockOutputForRegisteredUsers = false;
-	protected $btCacheBlockOutputLifetime = 0;
-}
+$this->inc('form.php');
 ?>
-

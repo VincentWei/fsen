@@ -26,16 +26,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-defined('C5_EXECUTE') or die('Access Denied.');
+defined('C5_EXECUTE') or die("Access Denied.");
 ?>
 
 <div class="ccm-block-field-group">
 <h4>Settings</h4><br/>
 
-<div id="projectID" class="clearfix">
-	<?php echo $form->label ('projectID', 'Project ID: ')?>
+<div id="strTitle" class="clearfix">
+	<?php echo $form->label ('strTitle', 'Title: ')?>
 	<div class="input">
-                <?php echo  $form->text ('projectID', $projectID, array ('style' => 'width: 250px')); ?>
+                <?php echo  $form->text ('strTitle', $strTitle, array ('style' => 'width: 250px')); ?>
         </div>
 </div>
 
