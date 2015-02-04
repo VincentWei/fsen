@@ -34,9 +34,6 @@ Loader::element('page_action_status_bar');
 
 <script lang="javascript">
 $(document).ready (function() {
-	/* resolve the conflict between jQuery UI and Bootstrap */
-	var bootstrapButton = $.fn.button.noConflict();
-	$.fn.bootstrapBtn = bootstrapButton;
 
 <?php
 if ($is_mobile_theme == 'false') {
