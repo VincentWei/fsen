@@ -32,6 +32,7 @@ require_once ('helpers/misc.php');
 require_once ('helpers/Michelf/Markdown.inc.php');
 require_once ('helpers/Michelf/MarkdownExtra.inc.php');
 require_once ('helpers/WikiParser/wikiParser.class.php');
+require_once ('libraries/htmLawed.php');
 
 class DocSectionManager {
 	const EC_OK 			= 0;
@@ -164,17 +165,23 @@ class DocSectionManager {
 			break;
 
 		case 'markdown':
-			$section_content = strip_tags ($section_content, self::RESERVED_TAGS);
+			//$section_content = strip_tags ($section_content, self::RESERVED_TAGS);
 			$section_content_formatted = \Michelf\Markdown::defaultTransform ($section_content);
+			$config = array('safe'=>1);
+			$section_content_formatted = htmLawed($section_content_formatted, $config);
 			break;
 
 		case 'markdown_extra':
-			$section_content = strip_tags ($section_content, self::RESERVED_TAGS);
+			//$section_content = strip_tags ($section_content, self::RESERVED_TAGS);
 			$section_content_formatted = \Michelf\MarkdownExtra::defaultTransform ($section_content);
+			$config = array('safe'=>1);
+			$section_content_formatted = htmLawed($section_content_formatted, $config);
 			break;
 
 		case 'markdown_safe':
 			$section_content_formatted = \Michelf\MarkdownExtra::defaultTransform ($section_content);
+			$config = array('safe'=>1);
+			$section_content_formatted = htmLawed($section_content_formatted, $config);
 			break;
 
 		default:
