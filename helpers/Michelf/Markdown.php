@@ -1562,6 +1562,7 @@ abstract class _MarkdownExtra_TmpImpl extends \Michelf\Markdown {
 	# Class attribute for code blocks goes on the `code` tag;
 	# setting this to true will put attributes on the `pre` tag instead.
 	public $code_attr_on_pre = false;
+	public $code_no_code_tag = false;
 	
 	# Predefined abbreviations.
 	public $predef_abbr = array();
@@ -2821,8 +2822,16 @@ abstract class _MarkdownExtra_TmpImpl extends \Michelf\Markdown {
 		$attrs     =& $matches[3];
 		$codeblock = $matches[4];
 		$codeblock = htmlspecialchars($codeblock, ENT_NOQUOTES);
+
+		/** TUNED BY WEIYM
 		$codeblock = preg_replace_callback('/^\n+/',
 			array($this, '_doFencedCodeBlocks_newlines'), $codeblock);
+		*/
+		if (!$this->code_no_code_tag) {
+			$codeblock = preg_replace_callback('/^\n+/',
+				array($this, '_doFencedCodeBlocks_newlines'), $codeblock);
+		}
+		/* END OF TUNNING */
 
 		if ($classname != "") {
 			if ($classname{0} == '.')
@@ -2831,10 +2840,20 @@ abstract class _MarkdownExtra_TmpImpl extends \Michelf\Markdown {
 		} else {
 			$attr_str = $this->doExtraAttributes($this->code_attr_on_pre ? "pre" : "code", $attrs);
 		}
+
 		$pre_attr_str  = $this->code_attr_on_pre ? $attr_str : '';
 		$code_attr_str = $this->code_attr_on_pre ? '' : $attr_str;
+		/** TUNED BY WEIYM
 		$codeblock  = "<pre$pre_attr_str><code$code_attr_str>$codeblock</code></pre>";
-		
+		*/
+		if ($this->code_no_code_tag) {
+			$codeblock  = "<pre$pre_attr_str>$codeblock</pre>";
+		}
+		else {
+			$codeblock  = "<pre$pre_attr_str><code$code_attr_str>$codeblock</code></pre>";
+		}
+		/* END OF TUNNING */
+
 		return "\n\n".$this->hashBlock($codeblock)."\n\n";
 	}
 	protected function _doFencedCodeBlocks_newlines($matches) {

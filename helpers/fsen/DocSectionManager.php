@@ -167,20 +167,19 @@ class DocSectionManager {
 		case 'markdown':
 			//$section_content = strip_tags ($section_content, self::RESERVED_TAGS);
 			$section_content_formatted = \Michelf\Markdown::defaultTransform ($section_content);
-			$config = array('safe'=>1);
+			$config = array('safe' => 1);
 			$section_content_formatted = htmLawed($section_content_formatted, $config);
 			break;
 
 		case 'markdown_extra':
-			//$section_content = strip_tags ($section_content, self::RESERVED_TAGS);
-			$section_content_formatted = \Michelf\MarkdownExtra::defaultTransform ($section_content);
-			$config = array('safe'=>1);
-			$section_content_formatted = htmLawed($section_content_formatted, $config);
-			break;
-
 		case 'markdown_safe':
-			$section_content_formatted = \Michelf\MarkdownExtra::defaultTransform ($section_content);
-			$config = array('safe'=>1);
+			//$section_content = strip_tags ($section_content, self::RESERVED_TAGS);
+			$parser = new \Michelf\MarkdownExtra;
+			$parser->code_class_prefix = 'brush:';
+			$parser->code_attr_on_pre = true;
+			$parser->code_no_code_tag = true;
+			$section_content_formatted = $parser->transform ($section_content);
+			$config = array('safe' => 1);
 			$section_content_formatted = htmLawed($section_content_formatted, $config);
 			break;
 
