@@ -112,12 +112,7 @@ include ('inc/project_frags.php');
 		if ($pt['part_handle'] == $part_handle) {
 ?>
 								<span class="section-action visible-on-edit-document-right">
-									<a class="dialog-launch"
-											dialog-append-buttons="true"
-											dialog-modal="false"
-											dialog-title="New Chapter"
-											dialog-width="60%"
-											dialog-height="40%"
+									<a class="launch-modal"
 											href="<?php echo "/index.php/tools/add_new_chapter.php?fsenDocLang=$doc_lang&cID=$page_id&projectID=$project_id&domainHandle=$domain_handle&volumeHandle=$volume_handle&partHandle=" . $pt['part_handle'] ?>">
 										<m class="glyphicon glyphicon-circle-plus"></m>
 									</a>
