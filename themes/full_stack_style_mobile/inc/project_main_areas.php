@@ -152,7 +152,14 @@ $common_request_parts = "?fsenDocLang=$doc_lang&cID=$page_id&projectID=$project_
 					</a>
 				</section>
 
+
 			</div>
+		</section>
+
+		<section class="container-fluid">
+				<div class="row">
+					<?php  $a = new Area('Demo'); $a->display($c); ?>
+				</div>
 		</section>
 
 	</article>
