@@ -38,17 +38,17 @@ $ret_info = json_decode ($ret_info);
 
 <fieldset>
 	<legend>
-		Demo for Open Cloud API (Simple List).
+		<?php echo t('Demo for Simple List') ?>
 	</legend>
 
 	<label class="control-label">
-		Computer Language
+		<?php echo t('Computer Language') ?>
 	</label>
 	<select id="selectLanguages" class="form-control">
 	</select>
 
 	<label class="control-label">
-		Open Source License
+		<?php echo t('Open Source License') ?>
 	</label>
 	<select id="selectLicenses" class="form-control">
 <?php

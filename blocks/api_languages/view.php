@@ -38,7 +38,7 @@ $ret_info = json_decode ($ret_info);
 
 <fieldset>
 	<legend>
-		<?php echo t('Demo for Languange List') ?>
+		<?php echo t('Demo for Languanges') ?>
 	</legend>
 
 	<label class="control-label">
