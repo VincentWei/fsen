@@ -39,7 +39,7 @@
 	</table>
 
 	<table name="fse_app_keys">
-		<field name="app_key" type="C" size="128">
+		<field name="app_key" type="C" size="64">
 			<key />
 			<notnull />
 		</field>
@@ -59,14 +59,6 @@
 		<field name="status" type="L">
 			<notnull />
 			<default value="1" />
-		</field>
-		<field name="last_token" type="C" size="32">
-			<notnull />
-			<default value="" />
-		</field>
-		<field name="token_time" type="T">
-			<notnull />
-			<default value="2015-01-01" />
 		</field>
 		<field name="create_time" type="T">
 			<notnull />
