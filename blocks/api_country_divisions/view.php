@@ -28,8 +28,11 @@
  */
 defined('C5_EXECUTE') or die('Access Denied.');
 
+require_once ('helpers/misc.php');
+
 $app_key = '86aa4f51050b63f199635d970d38f8dd167af1fa5cd412c32c8bf80935af397a';
-$ret_info = file_get_contents ('http://api.fullstackengineer.net/access_token/get/' . $app_key);
+$caller_id = get_caller_id ();
+$ret_info = file_get_contents ('http://api.fullstackengineer.net/access_token/get/' . "$app_key/$caller_id");
 $ret_info = json_decode ($ret_info);
 $access_token = $ret_info->message;
 
