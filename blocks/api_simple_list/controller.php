@@ -33,12 +33,12 @@ class ApiSimpleListBlockController extends BlockController {
 	protected $btInterfaceHeight = 200;
 	protected $btTable = 'btApiSimpleList';
 	protected $btDescription = "The block for API of Simple List.";
-	protected $btName = "API of Simple List";
+	protected $btName = "Simple List API";
 	protected $btWrapperClass = 'ccm-ui';
 	protected $btCacheBlockRecord = true;
 	protected $btCacheBlockOutput = true;
 	protected $btCacheBlockOutputOnPost = true;
-	protected $btCacheBlockOutputForRegisteredUsers = true;
+	protected $btCacheBlockOutputForRegisteredUsers = false;
 	protected $btCacheBlockOutputLifetime = 0; //until manually updated or cleared
 }
 ?>

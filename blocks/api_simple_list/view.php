@@ -5,7 +5,7 @@
  * FullStackEngineer.Net is a web site for hosting webpages
  * (especially the documents, forums) of open source projects.
  *
- * FullStackEngineer project itself is an open source project.
+ * FullStackEngineer.Net project itself is an open source project.
  *
  * For more information, please refer to:
  *

@@ -33,12 +33,12 @@ class ApiLanguagesBlockController extends BlockController {
 	protected $btInterfaceHeight = 200;
 	protected $btTable = 'btApiLanguages';
 	protected $btDescription = "The block for Languages API.";
-	protected $btName = "Languages";
+	protected $btName = "Languages API";
 	protected $btWrapperClass = 'ccm-ui';
 	protected $btCacheBlockRecord = true;
 	protected $btCacheBlockOutput = true;
 	protected $btCacheBlockOutputOnPost = true;
-	protected $btCacheBlockOutputForRegisteredUsers = true;
+	protected $btCacheBlockOutputForRegisteredUsers = false;
 	protected $btCacheBlockOutputLifetime = 0; //until manually updated or cleared
 }
 ?>

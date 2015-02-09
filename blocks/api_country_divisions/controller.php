@@ -5,7 +5,7 @@
  * FullStackEngineer.Net is a web site for hosting webpages
  * (especially the documents, forums) of open source projects.
  *
- * FullStackEngineer project itself is an open source project.
+ * FullStackEngineer.Net project itself is an open source project.
  *
  * For more information, please refer to:
  *
@@ -32,13 +32,13 @@ class ApiCountryDivisionsBlockController extends BlockController {
 	protected $btInterfaceWidth = 400;
 	protected $btInterfaceHeight = 200;
 	protected $btTable = 'btApiCountryDivisions';
-	protected $btDescription = "The block for Country Divisions API.";
-	protected $btName = "Country Divisions";
+	protected $btDescription = "The block for Countries/Divisions API.";
+	protected $btName = "Countries/Divisions API";
 	protected $btWrapperClass = 'ccm-ui';
 	protected $btCacheBlockRecord = true;
 	protected $btCacheBlockOutput = true;
 	protected $btCacheBlockOutputOnPost = true;
-	protected $btCacheBlockOutputForRegisteredUsers = true;
+	protected $btCacheBlockOutputForRegisteredUsers = false;
 	protected $btCacheBlockOutputLifetime = 0; //until manually updated or cleared
 }
 ?>
