@@ -68,7 +68,7 @@ foreach ($ret_info->items as $country) {
 	</select>
 
 	<label class="control-label">
-		<?php echo t('District') ?>
+		<?php echo t('City/District') ?>
 	</label>
 	<select id="selectDistricts" class="form-control">
 		<option value="0">
