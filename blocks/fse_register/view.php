@@ -40,13 +40,13 @@ require_once ('helpers/misc.php');
 		<header><h1><?php echo t('Sign up') ?></h1></header>
 		<section class="fieldBase"><?php echo t('Username') ?>
 			<input id="USERNAME" type="text" name="userName" maxlength="30"
-				title="<?php echo t('4 to 30 characters (letters, digitals, and underlines)') ?>"
-				pattern="[\w_]{4,30}" required="true"
-				placeholder="my_username">
+				title="<?php echo t('4 to 30 characters (letters, digitals, and dashes)') ?>"
+				pattern="[\w][-\w]{3,29}" required="true"
+				placeholder="my-username">
 			</input>
 		</section>
 		<section class="description">
-<?php echo t('Only English letters, digitals, and underlines are allowed. The length should be between 4 and 30. Note that the username will be automatically converted to lowercase letters. Anyone can visit your basic profile by browsing %s/&lt;lang_code&gt;/engineer/&lt;user_name&gt;.', BASE_URL) ?>
+<?php echo t('Username can only contain English letters, digitals, and dashed, and can not begin with a dash. The length should be between 4 and 30. Note that the username will be automatically converted to lowercase letters. Anyone can visit your basic profile by browsing %s/&lt;langcode&gt;/engineer/&lt;username&gt;.', BASE_URL) ?>
 <span id="badUSERNAME" style="display:none;"><?php echo t('Bad or duplicated username!') ?></span>
 		</section>
 
@@ -219,7 +219,7 @@ $('#LOCATIONPROVINCE').change (function () {
 function check_username (prefix, check_db)
 {
 	var username = $('#' + prefix + 'USERNAME').val();
-	var matched = username.match (/^[\w_]{4,30}$/)
+	var matched = username.match (/^[\w][\w-]{3,29}$/)
 	if (matched == username) {
 		if (check_db) {
 			$.post ("<?php echo $uh->getBlockTypeToolsURL ($bt) ?>/check_username.php",

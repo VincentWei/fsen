@@ -31,7 +31,7 @@ defined('C5_EXECUTE') or die('Access Denied.');
 $txt = Loader::helper ('text');
 $user_name = $txt->sanitize ($_POST ['userName']);
 
-if (preg_match ("/^[\w_]{4,30}$/", $user_name)) {
+if (preg_match ("/^[\w][\w-]{3,29}$/", $user_name)) {
 	$db = Loader::db ();
 	$query = "SELECT fse_id FROM fse_basic_profiles WHERE user_name=?";
 	$res = $db->getOne ($query, array ($user_name));

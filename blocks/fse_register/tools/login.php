@@ -49,7 +49,7 @@ $ret_info->status = 'bad';
 $ret_info->detail = 'na';
 
 $json = Loader::helper ('json');
-if (!preg_match ("/^[\w_]{4,30}$/", $user_name)) {
+if (!preg_match ("/^[\w][\w-]{3,29}$/", $user_name)) {
 	$ret_info->detail = t('Bad username!');
 	echo $json->encode ($ret_info);
 	exit (0);

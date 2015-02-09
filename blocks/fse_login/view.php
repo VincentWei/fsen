@@ -86,7 +86,7 @@ $bt = BlockType::getByHandle('fse_register');
 function check_username (prefix)
 {
 	var username_or_email = $('#' + prefix + 'USERNAME').val();
-	var username_pattern = /^[\w_]{4,30}$/;
+	var username_pattern = /^[\w][\w-]{3,29}$/;
 	var email_pattern = /^[\w-]+([.+][\w-]+)*@[\w-]+(\.[\w-]+)+$/;
 
 	$('#' + prefix + 'USERNAME').attr ("data-value", "");

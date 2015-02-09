@@ -106,7 +106,7 @@ VALUES (?, 'document', 'blog', ?, ?, ?, 1, ?)",
 			return;
 		}
 
-		if (!preg_match ("/^[\w_]{4,30}$/", $user_name)) {
+		if (!preg_match ("/^[\w][\w-]{3,29}$/", $user_name)) {
 			$this->set ('error', t('Bad username!'));
 			return;
 		}
