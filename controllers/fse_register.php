@@ -107,7 +107,11 @@ VALUES (?, 'document', 'blog', ?, ?, ?, 1, ?)",
 		}
 
 		$txt = Loader::helper ('text');
-		$user_name = $txt->urlify ($user_name);
+		if ($user_name != $txt->urlify ($user_name)) {
+			$this->set ('error', t('Bad username!'));
+			return;
+		}
+
 		if (!preg_match ("/^[\w][\w-]{3,29}$/", $user_name)) {
 			$this->set ('error', t('Bad username!'));
 			return;
