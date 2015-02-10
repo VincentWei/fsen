@@ -106,11 +106,12 @@ VALUES (?, 'document', 'blog', ?, ?, ?, 1, ?)",
 			return;
 		}
 
+		$txt = Loader::helper ('text');
+		$user_name = $txt->urlify ($user_name);
 		if (!preg_match ("/^[\w][\w-]{3,29}$/", $user_name)) {
 			$this->set ('error', t('Bad username!'));
 			return;
 		}
-		$user_name = strtolower ($user_name);
 
 		if (!preg_match ("/^[\w-]+([.+][\w-]+)*@[\w-]+(\.[\w-]+)+$/", $email_box)) {
 			$this->set ('error', t ('Bad email address!'));

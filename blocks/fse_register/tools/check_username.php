@@ -29,7 +29,7 @@
 defined('C5_EXECUTE') or die('Access Denied.');
 
 $txt = Loader::helper ('text');
-$user_name = $txt->sanitize ($_POST ['userName']);
+$user_name = $txt->urlify ($_POST ['userName']);
 
 if (preg_match ("/^[\w][\w-]{3,29}$/", $user_name)) {
 	$db = Loader::db ();
