@@ -35,6 +35,9 @@ Loader::element('page_action_status_bar');
 <script lang="javascript">
 $(document).ready (function() {
 
+	var bootstrapButton = $.fn.button.noConflict(); // return $.fn.button to previously assigned value
+	$.fn.bootstrapBtn = bootstrapButton;            // give $().bootstrapBtn the Bootstrap functionality
+
 <?php
 if ($is_mobile_theme == 'false') {
 	echo '	$("a.dialog-launch").dialog();
