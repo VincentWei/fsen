@@ -386,9 +386,6 @@ function chooseAvatar () {
 		}
 	};
 
-    /* resolve the conflict between jQuery UI and Bootstrap */
-    var bootstrapButton = $.fn.button.noConflict();
-    $.fn.bootstrapBtn = bootstrapButton;
 	ccm_launchFileManager ('&fType=' + ccmi18n_filemanager.FTYPE_IMAGE);
 }
 

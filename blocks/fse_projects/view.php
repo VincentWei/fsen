@@ -445,8 +445,6 @@ else {
 </form>
 
 <script type="text/javascript">
-var bootstrapButton = $.fn.button.noConflict();
-$.fn.bootstrapBtn = bootstrapButton;
 
 $('#formDeleteProject input[name="confirmDeleteProject"]').on ('input', function (e) {
 	if ($(this).val() == 'delete this project') {
@@ -569,10 +567,6 @@ function chooseIcon (project_id) {
 	curr_project_id = project_id;
 	ccm_chooseAsset = onChooseFile;
 
-/*
-	var bootstrapButton = $.fn.button.noConflict();
-	$.fn.bootstrapBtn = bootstrapButton;
-*/
 	ccm_launchFileManager ('&fType=' + ccmi18n_filemanager.FTYPE_IMAGE);
 }
 
