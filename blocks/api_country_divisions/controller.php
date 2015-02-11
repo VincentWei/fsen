@@ -36,8 +36,8 @@ class ApiCountryDivisionsBlockController extends BlockController {
 	protected $btName = "Countries/Divisions API";
 	protected $btWrapperClass = 'ccm-ui';
 	protected $btCacheBlockRecord = true;
-	protected $btCacheBlockOutput = true;
-	protected $btCacheBlockOutputOnPost = true;
+	protected $btCacheBlockOutput = false;
+	protected $btCacheBlockOutputOnPost = false;
 	protected $btCacheBlockOutputForRegisteredUsers = false;
 	protected $btCacheBlockOutputLifetime = 0; //until manually updated or cleared
 }
