@@ -26,7 +26,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-defined('C5_EXECUTE') or die("Access Denied.");
+defined('C5_EXECUTE') or die('Access Denied.');
 
 Loader::element('page_action_status_bar');
 
@@ -34,6 +34,9 @@ Loader::element('page_action_status_bar');
 
 <script lang="javascript">
 $(document).ready (function() {
+
+	var bootstrapButton = $.fn.button.noConflict(); // return $.fn.button to previously assigned value
+	$.fn.bootstrapBtn = bootstrapButton;            // give $().bootstrapBtn the Bootstrap functionality
 
 <?php
 if ($is_mobile_theme == 'false') {
