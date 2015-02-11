@@ -82,7 +82,7 @@ foreach ($ret_info->items as $country) {
 	<label class="control-label">
 		<?php echo t('County') ?>
 	</label>
-	<select id="selectCounty" class="form-control">
+	<select id="selectCounties" class="form-control">
 		<option value="0">
 			<?php echo t('N/A') ?>
 		</option>
@@ -91,21 +91,24 @@ foreach ($ret_info->items as $country) {
 
 <script type="text/javascript">
 $('#selectCountries').change (function () {
-	var $location_province = $('#selectProvinces');
 	$('#selectProvinces option').each (function () {
 	       	$(this).remove ();
 	});
-	$('<option value="0"><?php echo t('N/A') ?></option>').appendTo ($location_province);
+	$('<option value="0"><?php echo t('N/A') ?></option>').appendTo ('#selectProvinces');
 
-	var $location_district = $('#selectDistricts');
 	$('#selectDistricts option').each (function () {
 	       	$(this).remove ();
 	});
-	$('<option value="0"><?php echo t('N/A') ?></option>').appendTo ($location_district);
+	$('<option value="0"><?php echo t('N/A') ?></option>').appendTo ('#selectDistricts');
+
+	$('#selectCounties option').each (function () {
+	       	$(this).remove ();
+	});
+	$('<option value="0"><?php echo t('N/A') ?></option>').appendTo ('#selectCounties');
 
 	var country_id = $('#selectCountries').children ('option:selected').val ();
 	if (country_id != '0') {
-		$location_province.attr ("disabled", "true");
+		$('#selectProvinces').attr ("disabled", "true");
 		var fsenAPI = 'http://api.fullstackengineer.net/list/divisions/items/<?php echo $access_token ?>/' + country_id + '/zh_CN?callback=?';
 		$.getJSON (fsenAPI, '').done (function (data) {
 				$.each (data.items, function (i, item) {
@@ -118,16 +121,20 @@ $('#selectCountries').change (function () {
 });
 
 $('#selectProvinces').change (function () {
-	var $location_district = $('#selectDistricts');
 	$('#selectDistricts option').each (function () {
 	       	$(this).remove ();
 	});
-	$('<option value="0"><?php echo t('N/A') ?></option>').appendTo ($location_district);
+	$('<option value="0"><?php echo t('N/A') ?></option>').appendTo ('#selectDistricts');
+
+	$('#selectCounties option').each (function () {
+	       	$(this).remove ();
+	});
+	$('<option value="0"><?php echo t('N/A') ?></option>').appendTo ('#selectCounties');
 
 	var country_id = $('#selectCountries').children ('option:selected').val ();
 	var province_id = $('#selectProvinces').children ('option:selected').val ();
 	if (country_id != '0' && province_id != "0") {
-		$location_district.attr ("disabled", "true");
+		$('#selectDistricts').attr ("disabled", "true");
 		var fsenAPI = 'http://api.fullstackengineer.net/list/divisions/items/<?php echo $access_token ?>/' + province_id + '/zh_CN?callback=?';
 		$.getJSON (fsenAPI, '').done (function (data) {
 				$.each (data.items, function (i, item) {
@@ -140,24 +147,23 @@ $('#selectProvinces').change (function () {
 });
 
 $('#selectDistricts').change (function () {
-	var $location_county = $('#selectCounty');
-	$('#selectCounty option').each (function () {
+	$('#selectCounties option').each (function () {
 	       	$(this).remove ();
 	});
-	$('<option value="0"><?php echo t('N/A') ?></option>').appendTo ($location_county);
+	$('<option value="0"><?php echo t('N/A') ?></option>').appendTo ('#selectCounties');
 
 	var country_id = $('#selectCountries').children ('option:selected').val ();
 	var province_id = $('#selectProvinces').children ('option:selected').val ();
 	var district_id = $('#selectDistricts').children ('option:selected').val ();
 	if (country_id != '0' && province_id != "0" && district_id != '0') {
-		$location_county.attr ("disabled", "true");
+		$('#selectCounties').attr ("disabled", "true");
 		var fsenAPI = 'http://api.fullstackengineer.net/list/divisions/items/<?php echo $access_token ?>/' + district_id + '/zh_CN?callback=?';
 		$.getJSON (fsenAPI, '').done (function (data) {
 				$.each (data.items, function (i, item) {
-					$('<option>' + item.name + '</option>').attr ("value", item.division_id).appendTo ("#selectCounty");
+					$('<option>' + item.name + '</option>').attr ("value", item.division_id).appendTo ("#selectCounties");
 				});
 
-				$('#selectCounty').removeAttr ("disabled");
+				$('#selectCounties').removeAttr ("disabled");
 			});
 	}
 });
