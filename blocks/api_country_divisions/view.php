@@ -45,51 +45,130 @@ $ret_info = json_decode ($ret_info);
 		<?php echo t('Demo for Countries/Divisions') ?>
 	</legend>
 
-	<label class="control-label">
-		<?php echo t('Country/Region') ?>
-	</label>
-	<select id="selectCountries" class="form-control">
-		<option value="0">
-			<?php echo t('N/A') ?>
-		</option>
-<?php
-foreach ($ret_info->items as $country) {
-?>
-		<option value="<?php echo $country->numeric_code ?>"><?php echo $country->name ?></option>
-<?php
-}
-?>
-	</select>
+	<form class="form-inline">
+		<div class="form-group">
+			<label class="control-label">
+				<?php echo t('Country/Region: ') ?>
+			</label>
+			<div class="btn-group">
+				<button class="btn btn-default dropdown-toggle" type="button" id="buttonCountry"
+						data-toggle="dropdown" aria-expanded="true">
+					Country/Region
+					<span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu" style="max-height:260px;overflow-y:scroll;"
+						role="menu" aria-labelledby="buttonCountry" >
+	<?php
+	$img_url = 'http://assets.fullstackengineer.net/images/flags/png-w32/';
+	foreach ($ret_info->items as $country) {
+	?>
+					<li role="presentation">
+						<a class="country-item" role="menuitem" tabindex="-1" href="#"
+								data-value="<?php echo $country->numeric_code ?>">
+							<img src="<?php echo $img_url . strtolower ($country->alpha_2_code) . '.png'; ?>"
+									style="height:16px;width:auto" />
+							<?php echo $country->name ?>
+						</a>
+					</li>
+	<?php
+	}
+	?>
+				</ul>
+			</div>
 
-	<label class="control-label">
-		<?php echo t('State/Province') ?>
-	</label>
-	<select id="selectProvinces" class="form-control">
-		<option value="0">
-			<?php echo t('N/A') ?>
-		</option>
-	</select>
+			<label class="control-label">
+				<?php echo t('Or use select control: ') ?>
+			</label>
+			<select id="selectCountries" class="form-control">
+				<option value="0">
+					<?php echo t('N/A') ?>
+				</option>
+		<?php
+		foreach ($ret_info->items as $country) {
+		?>
+				<option value="<?php echo $country->numeric_code ?>"><?php echo $country->name ?></option>
+		<?php
+		}
+		?>
+			</select>
+		</div>
+	</form>
 
-	<label class="control-label">
-		<?php echo t('City/District') ?>
-	</label>
-	<select id="selectDistricts" class="form-control">
-		<option value="0">
-			<?php echo t('N/A') ?>
-		</option>
-	</select>
+	<div class="form-group">
+	</div>
 
-	<label class="control-label">
-		<?php echo t('County') ?>
-	</label>
-	<select id="selectCounties" class="form-control">
-		<option value="0">
-			<?php echo t('N/A') ?>
-		</option>
-	</select>
+	<div class="form-group">
+		<label class="control-label">
+			<?php echo t('State/Province') ?>
+		</label>
+		<select id="selectProvinces" class="form-control">
+			<option value="0">
+				<?php echo t('N/A') ?>
+			</option>
+		</select>
+	</div>
+
+	<div class="form-group">
+		<label class="control-label">
+			<?php echo t('City/District') ?>
+		</label>
+		<select id="selectDistricts" class="form-control">
+			<option value="0">
+				<?php echo t('N/A') ?>
+			</option>
+		</select>
+	</div>
+
+	<div class="form-group">
+		<label class="control-label">
+			<?php echo t('County') ?>
+		</label>
+		<select id="selectCounties" class="form-control">
+			<option value="0">
+				<?php echo t('N/A') ?>
+			</option>
+		</select>
+	</div>
 </fieldset>
 
 <script type="text/javascript">
+$('.country-item').click (function (e) {
+	e.preventDefault ();
+
+	$('#selectProvinces option').each (function () {
+	       	$(this).remove ();
+	});
+	$('<option value="0"><?php echo t('N/A') ?></option>').appendTo ('#selectProvinces');
+
+	$('#selectDistricts option').each (function () {
+	       	$(this).remove ();
+	});
+	$('<option value="0"><?php echo t('N/A') ?></option>').appendTo ('#selectDistricts');
+
+	$('#selectCounties option').each (function () {
+	       	$(this).remove ();
+	});
+	$('<option value="0"><?php echo t('N/A') ?></option>').appendTo ('#selectCounties');
+
+	var country_id = $(this).attr ('data-value');
+	if (country_id != '0') {
+		var html = $(this).html ();
+		html = html + '<span class="caret"></span>';
+		$('#buttonCountry').html (html);
+		$('#selectCountries').val (country_id);
+
+		$('#selectProvinces').attr ("disabled", "true");
+		var fsenAPI = 'http://api.fullstackengineer.net/list/divisions/items/<?php echo $access_token ?>/' + country_id + '/zh_CN?callback=?';
+		$.getJSON (fsenAPI, '').done (function (data) {
+				$.each (data.items, function (i, item) {
+					$('<option>' + item.name + '</option>').attr ("value", item.division_id).appendTo ("#selectProvinces");
+				});
+
+				$('#selectProvinces').removeAttr ("disabled");
+			});
+	}
+});
+
 $('#selectCountries').change (function () {
 	$('#selectProvinces option').each (function () {
 	       	$(this).remove ();
