@@ -29,9 +29,10 @@
 defined('C5_EXECUTE') or die('Access Denied.');
 
 $txt = Loader::helper ('text');
-$user_name = $txt->urlify ($_POST ['userName']);
+$org_user_name = strtolower ($_POST ['userName']);
+$user_name = $txt->urlify ($org_user_name);
 
-if ($user_name != $_POST ['userName']) {
+if ($user_name != $org_user_name) {
 	echo 'bad';
 	exit (0);
 }
